@@ -68,7 +68,7 @@ class EnrollController extends Controller
                     'course_id' => $course->id,
                 ],
                 [
-                    'deposit_id' => null,
+                    'deposit_id' => 0,
                     'owner_id' => $course->owner_id,
                     'owner_type' => $course->owner_type,
                     'name' => $course->name,
