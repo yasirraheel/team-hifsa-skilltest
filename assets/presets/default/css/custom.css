@@ -1,0 +1,74 @@
+/* Write your css codes here */
+@media (max-width: 575.98px) {
+  .product-details .key .curriculam-list {
+    padding: 0;
+    margin-left: -12px;
+    margin-right: -12px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .product-details .key .curriculam-list .list-group-item {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-details .key .curriculam-list .lesson-actions {
+    width: 100%;
+    margin-top: 2px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .product-details .key .curriculam-list .lesson-actions > p {
+    margin: 0;
+  }
+}
+
+.product-details .key .curriculam-list .list-group-item {
+  cursor: default;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.product-details .key .curriculam-list .lesson-head {
+  width: 100%;
+  cursor: pointer;
+}
+
+.product-details .key .curriculam-list .lesson-actions {
+  width: 100%;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.product-details .key .curriculam-list .lesson-actions > p {
+  margin: 0;
+}
+
+.product-details .key .curriculam-list .lesson-mark-complete-btn {
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.product-details .key .curriculam-list .lesson-completed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #198754;
+  white-space: nowrap;
+}
+
+.product-info .info-wrap .title {
+  text-align: left;
+}

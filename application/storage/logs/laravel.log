@@ -1,0 +1,13 @@
+[2026-03-26 14:12:57] production.INFO: bulk_lessons.youtube_import.start {"run_id":"12d1f6cf-480f-45e9-9ed6-5a318212ec15","admin_id":1,"course_id":4,"level":2,"value":1,"source":{"type":"playlist","playlist_id":"PLxbwE86jKRgNWssd5mGK4jz8b6OqZoPkc"},"import_comments":true,"comments_limit":20} 
+[2026-03-26 14:13:01] production.INFO: bulk_lessons.youtube_import.progress {"run_id":"12d1f6cf-480f-45e9-9ed6-5a318212ec15","last_lesson_id":220,"video_id":"_G21dAdbOR4"} 
+[2026-03-26 14:13:03] production.INFO: bulk_lessons.youtube_import.done {"run_id":"12d1f6cf-480f-45e9-9ed6-5a318212ec15","created":2,"failed":0,"stopped_early":false,"stop_reason":null} 
+[2026-03-26 14:54:30] production.INFO: lesson.complete.hit {"user_id":1,"course_id":"2","lesson_id":"131","ip":"::1","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"} 
+[2026-03-26 14:54:30] production.INFO: lesson.complete.ok {"user_id":1,"course_id":2,"lesson_id":131,"percent":63,"completed":48,"total":76} 
+[2026-03-26 15:17:57] production.INFO: LoadMoreLessons DEBUG {"course_id":"3","page":"2","perPage":10,"offset":10} 
+[2026-03-26 15:17:57] production.INFO: LoadMoreLessons Results {"lessons_returned":5,"total_lessons":15,"lesson_ids":[215,216,217,218,219]} 
+[2026-03-26 15:29:17] production.INFO: lesson.complete.hit {"user_id":1,"course_id":"2","lesson_id":"136","ip":"::1","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"} 
+[2026-03-26 15:29:17] production.INFO: lesson.complete.ok {"user_id":1,"course_id":2,"lesson_id":136,"percent":63,"completed":48,"total":76} 
+[2026-03-26 15:30:55] production.INFO: LoadMoreLessons DEBUG {"course_id":"2","page":"2","perPage":10,"offset":10} 
+[2026-03-26 15:30:55] production.INFO: LoadMoreLessons Results {"lessons_returned":10,"total_lessons":76,"lesson_ids":[139,140,141,142,143,144,145,146,147,148]} 
+[2026-03-26 15:31:01] production.INFO: lesson.complete.hit {"user_id":1,"course_id":"2","lesson_id":"140","ip":"::1","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"} 
+[2026-03-26 15:31:01] production.INFO: lesson.complete.ok {"user_id":1,"course_id":2,"lesson_id":140,"percent":63,"completed":48,"total":76} 
