@@ -325,12 +325,19 @@
 
   // slick
   $(".testimonial-slider").slick({
-    dots: false,
-    infinite: false,
-    speed: 300,
+    dots: true,
+    infinite: true,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    pauseOnHover: true,
+    arrows: true,
+    prevArrow:
+      '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+    nextArrow:
+      '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
     responsive: [
       {
         breakpoint: 1100,

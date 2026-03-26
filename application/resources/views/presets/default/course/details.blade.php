@@ -83,13 +83,21 @@
 
                         @if ($course->lessons->count() > 0)
                             <div class="curriculam-list">
+                                <form action="{{ route('course.details', [slug($course->name), $course->id]) }}" method="GET" class="d-flex justify-content-end align-items-center flex-wrap gap-2 mb-3">
+                                    <label for="lesson-sort-filter" class="me-2 mb-0">@lang('Sort Lessons')</label>
+                                    <select id="lesson-sort-filter" name="lesson_sort" class="form-select w-auto lesson-sort-select" onchange="this.form.submit()">
+                                        <option value="default" @selected(($lessonSort ?? 'default') === 'default')>@lang('Default')</option>
+                                        <option value="completed_first" @selected(($lessonSort ?? 'default') === 'completed_first')>@lang('Completed First')</option>
+                                        <option value="pending_first" @selected(($lessonSort ?? 'default') === 'pending_first')>@lang('Pending First')</option>
+                                    </select>
+                                </form>
                                 <ul class="list-group" id="lesson-list">
                                     @include('presets.default.components.lesson_item', ['lessons' => $course->lessons->take(10), 'course' => $course, 'isEnrolled' => $isEnrolled, 'completedLessonIds' => $completedLessonIds, 'lessonNotes' => $lessonNotes])
                                 </ul>
                                 @php $lessonCount = $course->lessons->count(); @endphp
                                 @if ($lessonCount > 10)
                                     <div class="text-center mt-4">
-                                        <button type="button" class="btn btn--base" id="load-more-lessons" data-page="2" data-course-id="{{ $course->id }}">
+                                        <button type="button" class="btn btn--base" id="load-more-lessons" data-page="2" data-course-id="{{ $course->id }}" data-lesson-sort="{{ $lessonSort ?? 'default' }}">
                                             @lang('Load More Lessons')
                                         </button>
                                     </div>
@@ -207,7 +215,12 @@
                                 @else
                                 <a href="{{ route('user.enroll.enroll', $course->id) }}"
                                 class="btn btn--base-3">@lang('Enroll Now')
-                                {{ $general->cur_sym . $course->price }} <i class="fa-solid fa-angles-right"></i></a>
+                                @if((float) $course->price > 0)
+                                    {{ $general->cur_sym . $course->price }}
+                                @else
+                                    @lang('Free')
+                                @endif
+                                <i class="fa-solid fa-angles-right"></i></a>
                                 @endif
                             </div>
                         </div>
@@ -420,6 +433,11 @@
             padding: 0.25rem 0.5rem;
         }
 
+        .lesson-sort-select {
+            min-width: 190px;
+            padding-right: 2.35rem;
+        }
+
         @media (max-width: 575.98px) {
             .curriculam-list .lesson-actions-bar {
                 flex-wrap: nowrap;
@@ -535,6 +553,10 @@
             (typeof window !== 'undefined') &&
             window.location &&
             (window.location.search || '').indexOf('lesson_debug=1') !== -1;
+        var lessonSortDebug =
+            (typeof window !== 'undefined') &&
+            window.location &&
+            (window.location.search || '').indexOf('lesson_sort_debug=1') !== -1;
 
         function lessonCompleteLog() {
             if (!lessonCompleteDebug) return;
@@ -547,6 +569,38 @@
             try {
                 console.error.apply(console, arguments);
             } catch (e) {}
+        }
+
+        function lessonSortLog() {
+            if (!lessonSortDebug) return;
+            try {
+                console.info.apply(console, arguments);
+            } catch (e) {}
+        }
+
+        var lessonSortType = 'default';
+
+        function setLessonSortType(sortType, source) {
+            var normalized = sortType;
+            if (normalized !== 'completed_first' && normalized !== 'pending_first') {
+                normalized = 'default';
+            }
+
+            lessonSortType = normalized;
+            $('#lesson-sort-filter').val(normalized);
+            $('.lesson-sort-btn').removeClass('active');
+            $('.lesson-sort-btn[data-sort="' + normalized + '"]').addClass('active');
+            console.log('[lesson.sort] setLessonSortType', {
+                source: source || 'unknown',
+                type: normalized
+            });
+
+            lessonSortLog('[lesson.sort] set type', {
+                source: source || 'unknown',
+                type: normalized
+            });
+
+            applyLessonSort();
         }
 
         function getDefaultButtonHtml(btn$) {
@@ -570,7 +624,7 @@
 
         function buildUndoBtn(lessonId, courseId) {
             var cid = courseId != null ? courseId : pageCourseId;
-            return '<button type="button" class="btn btn-sm btn--base-3 outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="' + lessonId + '" data-course-id="' + cid + '" title="' + lessonUndoTitle + '">' + lessonUndoLabel + '</button>';
+            return '<button type="button" class="btn btn-sm btn--base outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="' + lessonId + '" data-course-id="' + cid + '" title="' + lessonUndoTitle + '">' + lessonUndoLabel + '</button>';
         }
 
         var lessonCompleteListBtnToRestore$ = null;
@@ -679,10 +733,112 @@
                 .attr('aria-valuenow', percent);
         }
 
+        function ensureLessonOrderIndex() {
+            var maxOrder = 0;
+            $('#lesson-list .list-group-item').each(function() {
+                var existing = parseInt($(this).attr('data-sort-order'), 10);
+                if (!isNaN(existing) && existing > maxOrder) {
+                    maxOrder = existing;
+                }
+            });
+
+            $('#lesson-list .list-group-item').each(function() {
+                var item = $(this);
+                var existing = parseInt(item.attr('data-sort-order'), 10);
+                if (!isNaN(existing)) return;
+                maxOrder += 1;
+                item.attr('data-sort-order', maxOrder);
+            });
+        }
+
+        function isLessonCompleted(row) {
+            var completedAttr = row.attr('data-completed');
+            if (completedAttr === '1') return true;
+            if (completedAttr === '0') return false;
+
+            var lessonId = parseInt(row.attr('data-lesson-id'), 10);
+            if (!isNaN(lessonId) && completedLessonIds.has(lessonId)) {
+                return true;
+            }
+            if (row.find('.lesson-uncomplete-btn').length) {
+                return true;
+            }
+            if (row.find('.lesson-mark-complete-btn').length) {
+                return false;
+            }
+            return row.find('.lesson-completed').length > 0;
+        }
+
+        function applyLessonSort() {
+            var list = $('#lesson-list');
+            if (!list.length) return;
+
+            ensureLessonOrderIndex();
+
+            var sortType = lessonSortType || 'default';
+            var rows = list.children('.list-group-item').get();
+            console.log('[lesson.sort] applyLessonSort start', {
+                sortType: sortType,
+                rows: rows.length
+            });
+            lessonSortLog('[lesson.sort] apply start', {
+                sortType: sortType,
+                rows: rows.length
+            });
+
+            rows.sort(function(a, b) {
+                var rowA = $(a);
+                var rowB = $(b);
+                var orderA = parseInt(rowA.attr('data-sort-order'), 10) || 0;
+                var orderB = parseInt(rowB.attr('data-sort-order'), 10) || 0;
+
+                if (sortType === 'completed_first' || sortType === 'pending_first') {
+                    var completedA = isLessonCompleted(rowA) ? 1 : 0;
+                    var completedB = isLessonCompleted(rowB) ? 1 : 0;
+
+                    if (completedA !== completedB) {
+                        if (sortType === 'completed_first') {
+                            return completedB - completedA;
+                        }
+                        return completedA - completedB;
+                    }
+                }
+
+                return orderA - orderB;
+            });
+
+            $.each(rows, function(_, row) {
+                list.append(row);
+            });
+
+            var currentOrder = [];
+            list.children('.list-group-item').each(function() {
+                var row = $(this);
+                currentOrder.push({
+                    lessonId: parseInt(row.attr('data-lesson-id'), 10) || null,
+                    completed: row.attr('data-completed')
+                });
+            });
+            console.log('[lesson.sort] applyLessonSort done', currentOrder);
+
+            if (lessonSortDebug) {
+                var ordered = [];
+                list.children('.list-group-item').each(function() {
+                    var row = $(this);
+                    ordered.push({
+                        lessonId: parseInt(row.attr('data-lesson-id'), 10) || null,
+                        completed: isLessonCompleted(row)
+                    });
+                });
+                lessonSortLog('[lesson.sort] apply done', ordered);
+            }
+        }
+
         function updateLessonCompletedUI(lessonId) {
             var row = $('.curriculam-list .list-group-item[data-lesson-id="' + lessonId + '"]');
             if (!row.length) return;
             if (row.find('.lesson-completed').length) return;
+            row.attr('data-completed', '1');
             var actionsMeta = row.find('.lesson-actions-meta').first();
             if (actionsMeta.length) {
                 actionsMeta.append(
@@ -706,6 +862,7 @@
         function updateLessonIncompleteUI(lessonId) {
             var row = $('.curriculam-list .list-group-item[data-lesson-id="' + lessonId + '"]');
             if (!row.length) return;
+            row.attr('data-completed', '0');
             row.find('.lesson-completed').remove();
             row.find('.lesson-uncomplete-btn').remove();
             row.find('.lesson-mark-complete-btn').remove();
@@ -975,6 +1132,7 @@
 
         $(document).ready(function() {
             console.info('[lesson.complete] handlers bound', { isEnrolled: isEnrolled, pageCourseId: pageCourseId });
+            console.log('[lesson.sort] document ready binding sort handlers');
 
             $('#markLessonCompleteBtn').on('click', function(e) {
                 e.preventDefault();
@@ -1441,6 +1599,7 @@
                 var btn = $(this);
                 var page = btn.data('page');
                 var courseId = btn.data('course-id');
+                var lessonSort = btn.data('lesson-sort') || ($('#lesson-sort-filter').val() || 'default');
 
                 btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i> @lang("Loading...")');
 
@@ -1451,6 +1610,7 @@
                         _token: '{{ csrf_token() }}',
                         course_id: courseId,
                         page: page,
+                        lesson_sort: lessonSort,
                     },
                     success: function(response) {
                         if (response.status === 'success') {

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Course;
 use App\Models\Enroll;
+use App\Models\AdminNotification;
 use Illuminate\Http\Request;
 use App\Models\GatewayCurrency;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
+use App\Models\InstructorNotification;
 
 class EnrollController extends Controller
 {
@@ -40,14 +41,62 @@ class EnrollController extends Controller
     {
         $pageTitle = "Enroll Course";
         $course = Course::where('id', $id)->where('status', 1)->first();
-        $price = $course->price;
         if (!$course) {
             $notify[] = ['error', 'Your course is not valid'];
             return back()->withNotify($notify);
         }
 
+        $existingApprovedEnroll = Enroll::where('user_id', auth()->id())
+            ->where('course_id', $course->id)
+            ->where('status', 1)
+            ->first();
+
+        if ($existingApprovedEnroll) {
+            $notify[] = ['info', 'You are already enrolled in this course'];
+            return to_route('course.details', [slug($course->name), $course->id])->withNotify($notify);
+        }
+
+        $price = $course->price;
         if ($course->discount) {
             $price = priceCalculate(@$course->price, @$course->discount);
+        }
+
+        if ((float) $price <= 0) {
+            $enroll = Enroll::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'course_id' => $course->id,
+                ],
+                [
+                    'deposit_id' => null,
+                    'owner_id' => $course->owner_id,
+                    'owner_type' => $course->owner_type,
+                    'name' => $course->name,
+                    'discount' => $course->discount,
+                    'price' => $course->price,
+                    'total_amount' => 0,
+                    'status' => 1,
+                ]
+            );
+
+            if ($enroll->owner_type == 1) {
+                $adminNotification = new AdminNotification();
+                $adminNotification->user_id = auth()->id();
+                $adminNotification->title = 'New free enrollment from ' . auth()->user()->username;
+                $adminNotification->click_url = urlPath('course.details', [slug($enroll->name), $enroll->course_id]);
+                $adminNotification->save();
+            }
+
+            if ($enroll->owner_type == 2) {
+                $instructorNotification = new InstructorNotification();
+                $instructorNotification->instructor_id = $enroll->owner_id;
+                $instructorNotification->title = 'New free enrollment from ' . auth()->user()->username;
+                $instructorNotification->click_url = urlPath('course.details', [slug($enroll->name), $enroll->course_id]);
+                $instructorNotification->save();
+            }
+
+            $notify[] = ['success', 'Free course enrollment approved instantly'];
+            return to_route('course.details', [slug($course->name), $course->id])->withNotify($notify);
         }
 
         $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {

@@ -25,8 +25,8 @@ class CourseRequest extends FormRequest
     {
         $rules = [
             'name' => "required|string|max:255",
-            'price' => "required|numeric|gt:discount",
-            'discount' => "numeric|nullable|lt:price",
+            'price' => "required|numeric|gte:0",
+            'discount' => "numeric|nullable|gte:0|lte:price",
             'category_id' => "required",
             'learn_description' => "required",
             'curriculum' => "required",

@@ -60,16 +60,25 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-3">
+                                        <label class="mb-2">@lang('Course Type') </label>
+                                        <select class="form--control form-select" name="pricing_type" id="pricingType" required>
+                                            <option value="paid">@lang('Paid')</option>
+                                            <option value="free">@lang('Free')</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-3">
                                         <label class="mb-2">@lang('Price') </label>
                                         <input class="form-control" type="number" name="price" value=""
-                                            placeholder="Enter a price" min="0" required>
+                                            placeholder="Enter a price" min="0" step="0.01" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-3">
                                         <label class="mb-2">@lang('Discount') </label>
                                         <input class="form-control" type="number" name="discount" value=""
-                                            placeholder="Enter a discount" min="0">
+                                            placeholder="Enter a discount" min="0" step="0.01">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -175,6 +184,24 @@
                 fileAdded--;
                 $(this).closest('.elements').remove();
             });
+
+            const pricingTypeField = $('#pricingType');
+            const priceField = $('input[name="price"]');
+            const discountField = $('input[name="discount"]');
+
+            function syncPricingFields() {
+                const isFreeCourse = pricingTypeField.val() === 'free';
+                priceField.prop('readonly', isFreeCourse);
+                discountField.prop('readonly', isFreeCourse);
+
+                if (isFreeCourse) {
+                    priceField.val(0);
+                    discountField.val(0);
+                }
+            }
+
+            pricingTypeField.on('change', syncPricingFields);
+            syncPricingFields();
         })(jQuery);
     </script>
 @endpush

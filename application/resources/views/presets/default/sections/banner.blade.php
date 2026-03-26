@@ -1,7 +1,7 @@
 @php
     $bannerSection = getContent('banner.content', true);
     $counterSection = getContent('counter.content', true);
-    $bannerElementSection = getContent('banner.element', false, 3);
+    $bannerElementSection = getContent('banner.element', false, 3, true);
 @endphp
 
 <!-- < Hero Section -->

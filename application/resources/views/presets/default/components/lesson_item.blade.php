@@ -1,9 +1,10 @@
 @forelse($lessons as $key => $item)
     @php
-        $lessonIndex = ($lessonStartIndex ?? 1) + $key;
+        $lessonIndex = $lessonOrderMap[$item->id] ?? (($lessonStartIndex ?? 1) + $key);
     @endphp
     <li class="list-group-item lesson-row d-flex flex-column align-items-stretch"
-        data-lesson-id="{{ $item->id }}">
+        data-lesson-id="{{ $item->id }}"
+        data-completed="{{ !empty($isEnrolled) && in_array($item->id, $completedLessonIds ?? []) ? 1 : 0 }}">
         <div class="d-flex align-items-center lesson-head w-100"
             onclick="lessonPreview(event, this, {{ @$course->id }}, {{ $item->id }})">
             <i class="fa-regular fa-circle-play pre-i me-2 flex-shrink-0" aria-hidden="true"></i>
@@ -24,7 +25,7 @@
             <span class="text-muted small ms-auto flex-shrink-0" style="font-size: 0.85rem;">{{ $lessonIndex }}/{{ $totalLessonsCount ?? '?' }}</span>
             </div>
             @if (!empty($isEnrolled) && in_array($item->id, $completedLessonIds ?? []))
-                <button type="button" class="btn btn-sm btn--base-3 outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="{{ $item->id }}" data-course-id="{{ $course->id }}" title="@lang('Undo completion')">
+                <button type="button" class="btn btn-sm btn--base outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="{{ $item->id }}" data-course-id="{{ $course->id }}" title="@lang('Undo completion')">
                     @lang('Undo')
                 </button>
             @elseif (!empty($isEnrolled))

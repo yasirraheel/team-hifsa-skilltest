@@ -222,8 +222,13 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'course.index', compact('pageTitle', 'courses', 'categories'));
     }
 
-    public function courseDetails($slug, $id)
+    public function courseDetails(Request $request, $slug, $id)
     {
+        $lessonSort = $request->query('lesson_sort', 'default');
+        if (!in_array($lessonSort, ['default', 'completed_first', 'pending_first'])) {
+            $lessonSort = 'default';
+        }
+
         $course = Course::with([
             'category',
             'enrolls',
@@ -239,6 +244,11 @@ class SiteController extends Controller
         $reviews = Review::with('user')->where('course_id', $id)->paginate(getPaginate());
         $totalLessonsCount = $course->lessons->count();
         $lessonStartIndex = 1;
+        $lessonOrderMap = [];
+
+        foreach ($course->lessons->values() as $index => $lessonItem) {
+            $lessonOrderMap[(int) $lessonItem->id] = $index + 1;
+        }
 
         $isEnrolled = false;
         $completedLessonIds = [];
@@ -280,7 +290,10 @@ class SiteController extends Controller
             }
         }
 
-        return view($this->activeTemplate . 'course.details', compact('pageTitle', 'course', 'ad', 'reviews', 'isEnrolled', 'completedLessonIds', 'courseProgress', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex'));
+        $sortedLessons = $this->sortLessonsByCompletion($course->lessons, $completedLessonIds, $lessonSort);
+        $course->setRelation('lessons', $sortedLessons);
+
+        return view($this->activeTemplate . 'course.details', compact('pageTitle', 'course', 'ad', 'reviews', 'isEnrolled', 'completedLessonIds', 'courseProgress', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex', 'lessonSort', 'lessonOrderMap'));
     }
 
     public function loadMoreLessons(Request $request)
@@ -288,9 +301,11 @@ class SiteController extends Controller
         $request->validate([
             'course_id' => 'required|integer|exists:courses,id',
             'page' => 'required|integer|min:1',
+            'lesson_sort' => 'nullable|in:default,completed_first,pending_first',
         ]);
 
         $perPage = 10; // Load 10 lessons per page
+        $lessonSort = $request->lesson_sort ?? 'default';
         $course = Course::where('id', $request->course_id)->where('admin_status', 1)->where('status', 1)->first();
 
         if (!$course) {
@@ -306,21 +321,17 @@ class SiteController extends Controller
             'offset' => $offset,
         ]);
 
-        // Use query-based pagination instead of collection-based to load all lessons correctly
-        $lessons = Lesson::where('course_id', $request->course_id)
+        $allLessons = Lesson::where('course_id', $request->course_id)
             ->where('status', 1)
             ->orderBy('id', 'asc')
-            ->skip($offset)
-            ->take($perPage)
             ->get();
+        $lessonOrderMap = [];
+        foreach ($allLessons->values() as $index => $lessonItem) {
+            $lessonOrderMap[(int) $lessonItem->id] = $index + 1;
+        }
 
         // DEBUG: Log lessons count
         $totalLessonsCount = Lesson::where('course_id', $request->course_id)->where('status', 1)->count();
-        \Log::info('LoadMoreLessons Results', [
-            'lessons_returned' => $lessons->count(),
-            'total_lessons' => $totalLessonsCount,
-            'lesson_ids' => $lessons->pluck('id')->toArray(),
-        ]);
 
         $isEnrolled = false;
         $completedLessonIds = [];
@@ -337,6 +348,16 @@ class SiteController extends Controller
                     ->toArray();
             }
         }
+
+        $sortedLessons = $this->sortLessonsByCompletion($allLessons, $completedLessonIds, $lessonSort);
+        $lessons = $sortedLessons->slice($offset, $perPage)->values();
+
+        \Log::info('LoadMoreLessons Results', [
+            'lesson_sort' => $lessonSort,
+            'lessons_returned' => $lessons->count(),
+            'total_lessons' => $totalLessonsCount,
+            'lesson_ids' => $lessons->pluck('id')->toArray(),
+        ]);
 
         $lessonNotes = [];
         if (auth()->check() && $isEnrolled) {
@@ -360,10 +381,10 @@ class SiteController extends Controller
         // Calculate starting index for counter (e.g., page 2 with perPage 10 = start at 11)
         $lessonStartIndex = ($request->page - 1) * $perPage + 1;
 
-        $html = view('presets.default.components.lesson_item', compact('lessons', 'course', 'isEnrolled', 'completedLessonIds', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex'))->render();
+        $html = view('presets.default.components.lesson_item', compact('lessons', 'course', 'isEnrolled', 'completedLessonIds', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex', 'lessonOrderMap'))->render();
 
-        // Check if there are more lessons by seeing if we got a full page
-        $hasMore = $lessons->count() >= $perPage;
+        // Check if there are more lessons based on total sorted lessons.
+        $hasMore = ($offset + $lessons->count()) < $sortedLessons->count();
 
         return response()->json([
             'status' => 'success',
@@ -371,6 +392,23 @@ class SiteController extends Controller
             'hasMore' => $hasMore,
             'page' => $request->page,
         ]);
+    }
+
+    private function sortLessonsByCompletion($lessons, array $completedLessonIds, string $lessonSort)
+    {
+        if ($lessonSort === 'completed_first') {
+            return $lessons->sortBy(function ($lesson) use ($completedLessonIds) {
+                return in_array((int) $lesson->id, $completedLessonIds) ? 0 : 1;
+            })->values();
+        }
+
+        if ($lessonSort === 'pending_first') {
+            return $lessons->sortBy(function ($lesson) use ($completedLessonIds) {
+                return in_array((int) $lesson->id, $completedLessonIds) ? 1 : 0;
+            })->values();
+        }
+
+        return $lessons->sortBy('id')->values();
     }
 
     public function coursePreview(Request $request)

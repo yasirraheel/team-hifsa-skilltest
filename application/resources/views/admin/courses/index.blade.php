@@ -29,11 +29,21 @@
                                         <td><strong>{{ __(@$item->name) }}</strong></td>
                                         <td>
                                             <strong>
-                                                {{$general->cur_sym}}{{ __(@$item->price) }}</strong>
+                                                @if ((float) $item->price <= 0)
+                                                    @lang('Free')
+                                                @else
+                                                    {{ $general->cur_sym }}{{ __(@$item->price) }}
+                                                @endif
+                                            </strong>
                                         </td>
                                         <td>
                                             <strong>
-                                                {{$general->cur_sym}}{{ __(@$item->discount) ?? 'N/A' }}</strong>
+                                                @if ((float) $item->price <= 0)
+                                                    0
+                                                @else
+                                                    {{ $general->cur_sym }}{{ __(@$item->discount) ?? 'N/A' }}
+                                                @endif
+                                            </strong>
                                         </td>
 
                                         <td> {{ showDateTime($item->created_at) }} <br>

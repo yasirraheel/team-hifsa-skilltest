@@ -26,7 +26,7 @@
                     <div class="col-12 col-mb-12 col-lg-4 text-md-start mt-3 mt-lg-0 text-lg-end">
                         <div>
                             <a href="{{ __(@$advertisementSection->data_values?->url) }}"
-                                class="btn btn--base-3">@lang('Discover More')</a>
+                                class="btn btn--base-3">{{ __(@$advertisementSection->data_values?->button_name ?? 'Discover More') }}</a>
                         </div>
                     </div>
                 </div>

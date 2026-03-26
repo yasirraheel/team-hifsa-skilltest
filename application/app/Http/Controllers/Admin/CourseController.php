@@ -46,6 +46,9 @@ class CourseController extends Controller
 
     function store(CourseRequest $request)
     {
+        $request->validate([
+            'pricing_type' => 'nullable|in:paid,free',
+        ]);
 
         $pageTitle = 'Create My Course Category';
         $category = Category::findOrFail($request->category_id);
@@ -78,8 +81,9 @@ class CourseController extends Controller
         $course->owner_type = 1;
         $course->status = $request->status;
         $course->admin_status =1;
-        $course->price = $request->price;
-        $course->discount = $request->discount ?? null;
+        $isFreeCourse = $request->pricing_type === 'free';
+        $course->price = $isFreeCourse ? 0 : $request->price;
+        $course->discount = $isFreeCourse ? 0 : ($request->discount ?? null);
         $course->learn_description = $request->learn_description;
         $course->course_outline = $request->course_outline;
         $course->curriculum = $request->curriculum;
@@ -106,6 +110,10 @@ class CourseController extends Controller
 
     function update(CourseRequest $request, $id)
     {
+        $request->validate([
+            'pricing_type' => 'nullable|in:paid,free',
+        ]);
+
         $pageTitle = 'Update My Course Category';
         $course = new Course();
         $request->validate([
@@ -128,8 +136,9 @@ class CourseController extends Controller
         $course->owner_id = auth('admin')->id();
         $course->owner_type = 1;
         $course->status = $request->status;
-        $course->price = $request->price;
-        $course->discount = $request->discount ?? null;
+        $isFreeCourse = $request->pricing_type === 'free';
+        $course->price = $isFreeCourse ? 0 : $request->price;
+        $course->discount = $isFreeCourse ? 0 : ($request->discount ?? null);
         $course->learn_description = $request->learn_description;
         $course->course_outline = $request->course_outline;
         $course->curriculum = $request->curriculum;
