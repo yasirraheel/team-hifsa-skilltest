@@ -28,7 +28,9 @@
                         @endif
 
                         <div class="thumb-wrap">
-                            <img src="{{ getImage(getFilePath('course_image') . '/' . $item->image) }}" alt="...">
+                            <a href="{{ route('course.details', [slug($item->name), $item->id]) }}" class="d-block">
+                                <img src="{{ getImage(getFilePath('course_image') . '/' . $item->image) }}" alt="...">
+                            </a>
                         </div>
                         <div class="content-wrap">
                             <p class="category">{{ __(@$item->category->name) }}</p>
@@ -36,14 +38,26 @@
                                 <h6 class="title">{{ __(@$item->name) }}</h6>
                             </a>
                             <ul class="product-status">
-                                <li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="{{ str_replace('ago', '', diffForHumans(@$item->created_at)) }}">
                                     <i class="fa-solid fa-clock"></i>
                                     <p>{{ str_replace('ago', '', diffForHumans(@$item->created_at)) }}
                                     </p>
                                 </li>
-                                <li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="{{ __(@$item->enrolls->count()) }} @lang('Students')">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                     <p>{{ __(@$item->enrolls->count()) }} @lang('Students')</p>
+                                </li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="{{ $item->quizzes_count ?? 0 }} @lang('Quizzes')">
+                                    <i class="fa-solid fa-list-check"></i>
+                                    <p>{{ $item->quizzes_count ?? 0 }} @lang('Quizzes')</p>
+                                </li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="{{ $item->questions_count ?? 0 }} @lang('Questions')">
+                                    <i class="fa-solid fa-circle-question"></i>
+                                    <p>{{ $item->questions_count ?? 0 }} @lang('Questions')</p>
                                 </li>
                             </ul>
                         </div>

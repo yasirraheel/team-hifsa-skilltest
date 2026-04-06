@@ -29,11 +29,23 @@
                                         <td><strong><?php echo e(__(@$item->name)); ?></strong></td>
                                         <td>
                                             <strong>
-                                                <?php echo e($general->cur_sym); ?><?php echo e(__(@$item->price)); ?></strong>
+                                                <?php if((float) $item->price <= 0): ?>
+                                                    <?php echo app('translator')->get('Free'); ?>
+                                                <?php else: ?>
+                                                    <?php echo e($general->cur_sym); ?><?php echo e(__(@$item->price)); ?>
+
+                                                <?php endif; ?>
+                                            </strong>
                                         </td>
                                         <td>
                                             <strong>
-                                                <?php echo e($general->cur_sym); ?><?php echo e(__(@$item->discount) ?? 'N/A'); ?></strong>
+                                                <?php if((float) $item->price <= 0): ?>
+                                                    0
+                                                <?php else: ?>
+                                                    <?php echo e($general->cur_sym); ?><?php echo e(__(@$item->discount) ?? 'N/A'); ?>
+
+                                                <?php endif; ?>
+                                            </strong>
                                         </td>
 
                                         <td> <?php echo e(showDateTime($item->created_at)); ?> <br>

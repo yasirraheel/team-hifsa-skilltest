@@ -1,6 +1,6 @@
 <?php
     $worksContentSection = getContent('works.content', true);
-    $worksElementSection = getContent('works.element', false, 4);
+    $worksElementSection = getContent('works.element', false, 4, true);
 ?>
 
 <div class="how-work pt-120">

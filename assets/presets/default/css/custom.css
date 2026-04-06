@@ -72,3 +72,117 @@
 .product-info .info-wrap .title {
   text-align: left;
 }
+
+/* =============================================
+   Lesson Item Separation & Visual Distinction
+   ============================================= */
+
+/* Give each lesson row clear padding and a visible bottom divider */
+.curriculam-list #lesson-list .list-group-item.lesson-row {
+  padding: 14px 16px 14px 16px;
+  border-bottom: 2px solid #d1d5db !important;
+  border-left: 4px solid transparent;
+  background-color: #ffffff;
+  transition: border-left-color 0.2s ease, background-color 0.2s ease;
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* Alternating background for every other lesson row */
+.curriculam-list #lesson-list .list-group-item.lesson-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover state: accent left border + slight lift */
+.curriculam-list #lesson-list .list-group-item.lesson-row:hover {
+  border-left-color: var(--base-color, #e8840b);
+  background-color: #fff8f0;
+}
+
+/* Make the lesson title line taller and bolder for easy scanning */
+.curriculam-list #lesson-list .lesson-head {
+  padding: 2px 0;
+  font-weight: 600;
+}
+
+.curriculam-list #lesson-list .lesson-title {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Add a hairline top rule to the Lesson Notes block so it clearly
+   belongs to its own lesson and doesn't bleed into the next one */
+.curriculam-list #lesson-list .lesson-notes {
+  margin-top: 10px !important;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+}
+
+/* Add Note button spacing */
+.curriculam-list #lesson-list .lesson-note-toggle-btn {
+  margin-top: 6px !important;
+}
+
+/* Completed lesson: green left accent + stronger green separator */
+.curriculam-list #lesson-list .list-group-item.lesson-row[data-completed="1"] {
+  border-left-color: #198754 !important;
+  background-color: #f0fff4;
+  border-bottom-color: #a7d7b8 !important;
+}
+
+/* -------------------------------------------------
+   Undo / outline button fix
+   The theme's .btn--base.outline class has no CSS.
+   These rules give it a proper bordered outline style.
+   ------------------------------------------------- */
+.btn--base.outline,
+.lesson-uncomplete-btn {
+  background-color: transparent !important;
+  color: var(--base-color, #e8840b) !important;
+  border: 2px solid var(--base-color, #e8840b) !important;
+  border-radius: 4px;
+}
+
+.btn--base.outline:hover,
+.lesson-uncomplete-btn:hover {
+  background-color: var(--base-color, #e8840b) !important;
+  color: #ffffff !important;
+}
+
+/* Small top divider label for lesson notes section */
+.curriculam-list #lesson-list .lesson-notes h6 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+/* Last lesson row: softer bottom border to avoid doubling the container edge */
+.curriculam-list #lesson-list .list-group-item.lesson-row:last-child {
+  border-bottom: 1px solid #d1d5db !important;
+}
+
+/* -------------------------------------------------
+   Lesson Notes Table Fix
+   Ensure WYSIWYG tables in lesson notes take full width
+   ------------------------------------------------- */
+.lesson-notes .note-content table {
+  width: 100% !important;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+.lesson-notes .note-content table th,
+.lesson-notes .note-content table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Responsive: keep reasonable padding on small screens */
+@media (max-width: 575.98px) {
+  .curriculam-list #lesson-list .list-group-item.lesson-row {
+    padding: 12px 10px 12px 12px;
+  }
+}

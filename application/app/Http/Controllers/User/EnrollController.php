@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Course;
 use App\Models\Enroll;
+use App\Models\Lesson;
+use App\Models\LessonCompletion;
 use App\Models\AdminNotification;
 use Illuminate\Http\Request;
 use App\Models\GatewayCurrency;
@@ -15,25 +17,63 @@ class EnrollController extends Controller
     public function enrollCourses(Request $request)
     {
         $pageTitle = "Enroll Courses";
-        $enrolls = Enroll::with('course', 'course.category','course.quizzes')->where('user_id', auth()->id())->where('status', 1)->orderBy('id', 'desc');
+        $enrolls = Enroll::with([
+            'course' => function ($query) {
+                $query->with('category')->withCount(['quizzes', 'questions']);
+            }
+        ])->where('user_id', auth()->id())->where('status', 1)->orderBy('id', 'desc');
         if ($request->search) {
             $enrolls = $enrolls->where('name', 'like', "%$request->search%")->paginate(getPaginate());
         } else {
             $enrolls = $enrolls->paginate(getPaginate());
         }
-        return view($this->activeTemplate . 'user.enrolls.courses', compact('pageTitle', 'enrolls'));
+        $courseProgress = $this->buildCourseProgress($enrolls->pluck('course_id')->unique()->values()->all());
+        return view($this->activeTemplate . 'user.enrolls.courses', compact('pageTitle', 'enrolls', 'courseProgress'));
     }
 
     public function allCourses(Request $request)
     {
         $pageTitle = "All Courses";
-        $courses = Course::with('enrolls','category')->whereIn('status', [1])->orderBy('id', 'desc');
+        $courses = Course::with('enrolls', 'category')->withCount(['quizzes', 'questions'])->whereIn('status', [1])->orderBy('id', 'desc');
         if ($request->search) {
             $courses = $courses->where('name', 'like', "%$request->search%")->paginate(getPaginate());
         } else {
             $courses = $courses->paginate(getPaginate());
         }
         return view($this->activeTemplate . 'user.enrolls.all_courses', compact('pageTitle', 'courses'));
+    }
+
+    private function buildCourseProgress(array $courseIds): array
+    {
+        if (empty($courseIds)) {
+            return [];
+        }
+
+        $lessonTotals = Lesson::whereIn('course_id', $courseIds)
+            ->where('status', 1)
+            ->selectRaw('course_id, COUNT(*) as total_lessons')
+            ->groupBy('course_id')
+            ->pluck('total_lessons', 'course_id');
+
+        $completedTotals = LessonCompletion::where('user_id', auth()->id())
+            ->whereIn('course_id', $courseIds)
+            ->selectRaw('course_id, COUNT(DISTINCT lesson_id) as completed_lessons')
+            ->groupBy('course_id')
+            ->pluck('completed_lessons', 'course_id');
+
+        $progress = [];
+        foreach ($courseIds as $courseId) {
+            $total = (int) ($lessonTotals[$courseId] ?? 0);
+            $completed = (int) ($completedTotals[$courseId] ?? 0);
+            $percent = $total > 0 ? (int) floor(($completed / $total) * 100) : 0;
+            $progress[$courseId] = [
+                'completed' => $completed,
+                'total' => $total,
+                'percent' => $percent,
+            ];
+        }
+
+        return $progress;
     }
 
 

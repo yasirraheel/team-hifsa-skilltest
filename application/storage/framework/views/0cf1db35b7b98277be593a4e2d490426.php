@@ -8,8 +8,10 @@
                             <span class="dis-tag">-<?php echo e(@$item->discount); ?>%</span>
                         <?php endif; ?>
                         <div class="thumb-wrap">
-                            <img src="<?php echo e(getImage(getFilePath('course_image') . '/' . $item->image)); ?>"
-                                alt="course-image">
+                            <a href="<?php echo e(route('course.details', [slug($item->name), $item->id])); ?>" class="d-block">
+                                <img src="<?php echo e(getImage(getFilePath('course_image') . '/' . $item->image)); ?>"
+                                    alt="course-image">
+                            </a>
                         </div>
                         <div class="content-wrap">
                             <p class="category"><?php echo e(@$item->category?->name); ?></p>
@@ -17,15 +19,27 @@
                                 <h6 class="title"><?php echo e(strLimit(@$item->name, 23)); ?></h6>
                             </a>
                             <ul class="product-status">
-                                <li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="<?php echo e(str_replace('ago', '', diffForHumans(@$item->created_at))); ?>">
                                     <i class="fa-solid fa-clock"></i>
                                     <p><?php echo e(str_replace('ago', '', diffForHumans(@$item->created_at))); ?>
 
                                     </p>
                                 </li>
-                                <li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="<?php echo e($item->enrolls->count()); ?> <?php echo app('translator')->get('Students'); ?>">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                     <p><?php echo e($item->enrolls->count()); ?> <?php echo app('translator')->get('Students'); ?></p>
+                                </li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="<?php echo e($item->quizzes_count ?? 0); ?> <?php echo app('translator')->get('Quizzes'); ?>">
+                                    <i class="fa-solid fa-list-check"></i>
+                                    <p><?php echo e($item->quizzes_count ?? 0); ?> <?php echo app('translator')->get('Quizzes'); ?></p>
+                                </li>
+                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="<?php echo e($item->questions_count ?? 0); ?> <?php echo app('translator')->get('Questions'); ?>">
+                                    <i class="fa-solid fa-circle-question"></i>
+                                    <p><?php echo e($item->questions_count ?? 0); ?> <?php echo app('translator')->get('Questions'); ?></p>
                                 </li>
                             </ul>
                         </div>

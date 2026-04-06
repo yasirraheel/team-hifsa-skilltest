@@ -28,8 +28,10 @@
                                             onclick="courseVieweModal(this)" data-data="{{$item}}" >@lang('view')</a>
                                     </div>
                                     <div class="thumb-wrap">
-                                        <img src="{{ getImage(getFilePath('course_image') . '/' . $item->course->image) }}"
-                                            alt="...">
+                                        <a href="{{ route('course.details', [slug($item->course->name), $item->course_id]) }}" class="d-block">
+                                            <img src="{{ getImage(getFilePath('course_image') . '/' . $item->course->image) }}"
+                                                alt="...">
+                                        </a>
                                     </div>
                                     <div class="content-wrap">
                                         <p class="category">{{ __(@$item->course->category->name) }}</p>
@@ -38,16 +40,45 @@
                                             <h6 class="title">{{ __(@$item->course->name) }}</h6>
                                         </a>
                                         <ul class="product-status">
-                                            <li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="{{ str_replace('ago', '', diffForHumans(@$item->course->created_at)) }}">
                                                 <i class="fa-solid fa-clock"></i>
                                                 <p>{{ str_replace('ago', '', diffForHumans(@$item->course->created_at)) }}
                                                 </p>
                                             </li>
-                                            <li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="{{ __(@$item->enrollCount($item->id)) }} @lang('Students')">
                                                 <i class="fa-solid fa-graduation-cap"></i>
                                                 <p>{{ __(@$item->enrollCount($item->id)) }} @lang('Students')</p>
                                             </li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="{{ @$item->course->quizzes_count ?? 0 }} @lang('Quizzes')">
+                                                <i class="fa-solid fa-list-check"></i>
+                                                <p>{{ @$item->course->quizzes_count ?? 0 }} @lang('Quizzes')</p>
+                                            </li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="{{ @$item->course->questions_count ?? 0 }} @lang('Questions')">
+                                                <i class="fa-solid fa-circle-question"></i>
+                                                <p>{{ @$item->course->questions_count ?? 0 }} @lang('Questions')</p>
+                                            </li>
                                         </ul>
+                                        @php
+                                            $progress = $courseProgress[$item->course_id] ?? ['completed' => 0, 'total' => 0, 'percent' => 0];
+                                        @endphp
+                                        <div class="mt-2"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="@lang('Completed'): {{ $progress['completed'] }}/{{ $progress['total'] }} ({{ $progress['percent'] }}%)">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small>@lang('Progress')</small>
+                                                <small>{{ $progress['percent'] }}%</small>
+                                            </div>
+                                            <div class="progress" style="height: 6px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: {{ $progress['percent'] }}%;"
+                                                    aria-valuenow="{{ $progress['percent'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="carn-btm">
                                         <ul class="star-wrap rating-wrap">

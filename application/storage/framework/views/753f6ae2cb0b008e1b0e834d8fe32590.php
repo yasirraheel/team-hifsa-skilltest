@@ -1,9 +1,10 @@
 <?php $__empty_1 = true; $__currentLoopData = $lessons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <?php
-        $lessonIndex = ($lessonStartIndex ?? 1) + $key;
+        $lessonIndex = $lessonOrderMap[$item->id] ?? (($lessonStartIndex ?? 1) + $key);
     ?>
     <li class="list-group-item lesson-row d-flex flex-column align-items-stretch"
-        data-lesson-id="<?php echo e($item->id); ?>">
+        data-lesson-id="<?php echo e($item->id); ?>"
+        data-completed="<?php echo e(!empty($isEnrolled) && in_array($item->id, $completedLessonIds ?? []) ? 1 : 0); ?>">
         <div class="d-flex align-items-center lesson-head w-100"
             onclick="lessonPreview(event, this, <?php echo e(@$course->id); ?>, <?php echo e($item->id); ?>)">
             <i class="fa-regular fa-circle-play pre-i me-2 flex-shrink-0" aria-hidden="true"></i>
@@ -24,7 +25,7 @@
             <span class="text-muted small ms-auto flex-shrink-0" style="font-size: 0.85rem;"><?php echo e($lessonIndex); ?>/<?php echo e($totalLessonsCount ?? '?'); ?></span>
             </div>
             <?php if(!empty($isEnrolled) && in_array($item->id, $completedLessonIds ?? [])): ?>
-                <button type="button" class="btn btn-sm btn--base-3 outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="<?php echo e($item->id); ?>" data-course-id="<?php echo e($course->id); ?>" title="<?php echo app('translator')->get('Undo completion'); ?>">
+                <button type="button" class="btn btn-sm btn--base outline lesson-uncomplete-btn flex-shrink-0" data-lesson-id="<?php echo e($item->id); ?>" data-course-id="<?php echo e($course->id); ?>" title="<?php echo app('translator')->get('Undo completion'); ?>">
                     <?php echo app('translator')->get('Undo'); ?>
                 </button>
             <?php elseif(!empty($isEnrolled)): ?>

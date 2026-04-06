@@ -369,4 +369,18 @@ class ManageUsersController extends Controller
         return view('admin.reports.notification_history', compact('pageTitle','logs','user'));
     }
 
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        
+        try {
+            $user->delete();
+            $notify[] = ['success', 'User has been deleted successfully'];
+            return to_route('admin.users.all')->withNotify($notify);
+        } catch (\Exception $e) {
+            $notify[] = ['error', 'User cannot be deleted due to existing related records'];
+            return back()->withNotify($notify);
+        }
+    }
+
 }

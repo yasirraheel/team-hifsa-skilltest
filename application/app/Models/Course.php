@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Enroll;
 use App\Models\Lesson;
+use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -49,6 +50,11 @@ class Course extends Model
    public function quizzes()
    {
       return $this->hasMany(Quiz::class);
+   }
+
+   public function questions()
+   {
+      return $this->hasManyThrough(Question::class, Quiz::class, 'course_id', 'quiz_id');
    }
 
    public function quizCertificate()

@@ -100,6 +100,20 @@
     <!-- main js -->
     <script src="<?php echo e(asset($activeTemplateTrue . 'js/main.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/common/js/bootstrap.bundle.min.js')); ?>"></script>
+    <script>
+        window.initBootstrapTooltips = function(scope) {
+            const root = scope || document;
+            const triggers = root.querySelectorAll('[data-bs-toggle="tooltip"]');
+            triggers.forEach((el) => {
+                if (!bootstrap.Tooltip.getInstance(el)) {
+                    new bootstrap.Tooltip(el);
+                }
+            });
+        };
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initBootstrapTooltips();
+        });
+    </script>
 
     <?php echo $__env->yieldPushContent('script-lib'); ?>
     <?php echo $__env->yieldPushContent('script'); ?>

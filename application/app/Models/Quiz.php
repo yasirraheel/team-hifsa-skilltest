@@ -51,15 +51,45 @@ class Quiz extends Model
     {
         $correctCount = 0;
         foreach ($items->userQuizzes as $data) {
-            $correctCount +=
-                $data->pivot->user_answer === $data->pivot->correct_answer ? $data->pivot->mark : 0;
+            $userAnswers = $this->normalizeAnswerPayload($data->pivot->user_answer);
+            $correctAnswers = $this->normalizeAnswerPayload($data->pivot->correct_answer);
+
+            if ($userAnswers === $correctAnswers) {
+                $correctCount += (int) $data->pivot->mark;
+            }
         }
         return $correctCount;
     }
 
+    private function normalizeAnswerPayload($value): array
+    {
+        if (is_null($value) || $value === '') {
+            return [];
+        }
+
+        if (is_array($value)) {
+            $items = $value;
+        } elseif (is_numeric($value)) {
+            $items = [(int) $value];
+        } else {
+            $decoded = json_decode((string) $value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $items = $decoded;
+            } else {
+                $items = [(int) $value];
+            }
+        }
+
+        return collect($items)
+            ->map(fn ($item) => (int) $item)
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+    }
+
 
 }
-
 
 
 

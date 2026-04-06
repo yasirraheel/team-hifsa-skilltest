@@ -70,6 +70,9 @@
                 success: function(response) {
                     if (response.status == 'success') {
                         $('.main-content').html(response.html)
+                        if (typeof window.initBootstrapTooltips === 'function') {
+                            window.initBootstrapTooltips(document.querySelector('.main-content'));
+                        }
                     }
                     if (response.status == 'error') {
                         Toast.fire({

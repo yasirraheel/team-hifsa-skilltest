@@ -44,6 +44,11 @@
                                             <input class="form-control" type="number" name="mark" value=""
                                                 placeholder="Enter a Mark" required>
                                         </div>
+                                        <div class="form-group mb-3">
+                                            <label class="mb-2">@lang('Explanation') </label>
+                                            <textarea class="form-control" name="explanation" rows="3"
+                                                placeholder="Why the correct answer is correct">{{ old('explanation') }}</textarea>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -56,7 +61,7 @@
                                                 <i class="fa fa-plus"></i> @lang('Add New')
                                             </button>
                                         </div>
-                                        <div class="row global-card align-items-center">
+                                        <div class="row global-card align-items-center option-row">
                                             <div class="col-sm-10 my-3">
                                                 <div class="file-upload">
                                                     <label class="form-label">@lang('Options')</label>
@@ -68,9 +73,10 @@
 
                                             <div class="col-sm-2">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="correct_answer" type="checkbox"
+                                                    <input class="form-check-input correct-answer-input" name="correct_answer[]"
+                                                        type="checkbox"
                                                         value="0" id="flexCheckChecked" checked
-                                                        onchange="checkedCheckBox(this)">
+                                                        >
                                                     <label class="form-check-label" for="flexCheckChecked">
                                                         @lang('Correct Answer')
                                                     </label>
@@ -78,9 +84,8 @@
                                             </div>
 
                                         </div>
-                                        <div id="fileUploadsContainer">
-
-                                        </div>
+                                        <small class="text-muted">@lang('You can mark one or more correct answers.')</small>
+                                        <div id="fileUploadsContainer"></div>
                                     </div>
                                 </div>
 
@@ -122,19 +127,19 @@
                 fileAdded++;
                 console.log(fileAdded);
                 $("#fileUploadsContainer").append(`
-                <div class="row elements global-card mt-4 align-items-center">
-                    <div class="col-sm-10 my-3">
-                        <div class="file-upload input-group">
-                            <input type="text" name="options[]" id="inputOptions" class="form-control form--control"
-                                placeholder="Options Name" required />  
+                    <div class="row elements global-card mt-4 align-items-center option-row">
+                        <div class="col-sm-10 my-3">
+                            <div class="file-upload input-group">
+                                <input type="text" name="options[]" id="inputOptions" class="form-control form--control"
+                                    placeholder="Options Name" required />  
                                 <button class="input-group-text btn--danger remove-btn border-0"><i class="las la-times"></i></button>                                          
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${fileAdded}"
-                                id="flexCheckChecked" name="correct_answer" onchange="checkedCheckBox(this)">
+                            <input class="form-check-input correct-answer-input" type="checkbox" value="${fileAdded}"
+                                id="flexCheckChecked" name="correct_answer[]">
                             <label class="form-check-label" for="flexCheckChecked">
                                 @lang('Correct Answer')
                             </label>
@@ -147,12 +152,12 @@
                 fileAdded--;
                 $(this).closest('.elements').remove();
             });
-        })(jQuery);
-    </script>
 
-    <script>
-        function checkedCheckBox(object) {
-            $('input[type="checkbox"]').not(object).prop('checked', false);
-        }
+            $('form').on('submit', function() {
+                $(this).find('.option-row').each(function(index) {
+                    $(this).find('.correct-answer-input').val(index);
+                });
+            });
+        })(jQuery);
     </script>
 @endpush

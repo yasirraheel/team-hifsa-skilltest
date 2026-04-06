@@ -1,0 +1,1388 @@
+{
+  "count": 100,
+  "stats": {
+    "single": 90,
+    "multi": 10,
+    "opt4": 54,
+    "opt5": 26,
+    "opt6": 20
+  },
+  "questions": [
+    {
+      "question": "An engineer validates IPv6 behavior on a LAN. Which two statements are correct about link-local addresses? (Select TWO answers.)",
+      "options": [
+        "They are used for on-link communication",
+        "They are routable on the public Internet",
+        "They typically begin with FE80::/10",
+        "They replace default gateways",
+        "They require DHCPv4"
+      ],
+      "correct_answers": [
+        0,
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /25 subnet? (Select the best answer.)",
+      "options": [
+        "128",
+        "62",
+        "63",
+        "126",
+        "124"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which architecture is most associated with east-west traffic in modern data centers? (Select the best answer.)",
+      "options": [
+        "Collapsed core",
+        "Spine-leaf",
+        "Hub-and-spoke",
+        "Three-tier campus"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which statement best describes microsegmentation in virtualized environments? (Select the best answer.)",
+      "options": [
+        "Using only ACLs on WAN edge",
+        "Policy enforcement between workloads in the same subnet",
+        "Physical separation with dedicated switches",
+        "Subnetting with /30 links only"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which cable issue can cause CRC errors and intermittent link flaps? (Select the best answer.)",
+      "options": [
+        "Bad termination or excessive EMI",
+        "Correct duplex and speed",
+        "Using a management VLAN",
+        "Using DHCP"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which subnet contains host 172.16.77.190/20? (Select the best answer.)",
+      "options": [
+        "172.16.64.0/20",
+        "172.16.0.0/20",
+        "172.16.77.0/20",
+        "172.16.80.0/20",
+        "172.16.76.0/20"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What happens when a frame enters a switch port assigned to VLAN 20? (Select the best answer.)",
+      "options": [
+        "It is broadcast to all VLANs",
+        "It is automatically NATed",
+        "It is encapsulated in GRE",
+        "It is forwarded only within VLAN 20 unless routed"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.44.12.199 with prefix /23. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.44.12.1",
+        "10.44.14.0",
+        "10.44.12.0",
+        "10.44.13.255",
+        "10.44.10.0",
+        "10.44.13.0"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "You are documenting IPv6 scopes. Which two address types are not intended for global Internet routing in normal enterprise design? (Select TWO answers.)",
+      "options": [
+        "Link-local",
+        "Unique local",
+        "Global unicast",
+        "Global anycast",
+        "Provider-assigned /48"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A /26 subnet increments by how many addresses in the fourth octet? (Select the best answer.)",
+      "options": [
+        "32",
+        "128",
+        "64",
+        "16",
+        "8"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 203.0.113.17 with prefix /30. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "203.0.113.17",
+        "203.0.113.16",
+        "203.0.113.19",
+        "203.0.113.18",
+        "203.0.113.12",
+        "203.0.113.20"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.168.88.222 with prefix /28. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.168.88.224",
+        "192.168.88.208",
+        "192.168.88.192",
+        "192.168.88.209",
+        "192.168.88.223",
+        "192.168.88.216"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.10.34.77 with prefix /27. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.10.34.95",
+        "10.10.34.32",
+        "10.10.34.80",
+        "10.10.34.64",
+        "10.10.34.96",
+        "10.10.34.65"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the equivalent IPv6 concept to IPv4 broadcast? (Select the best answer.)",
+      "options": [
+        "IPv6 uses multicast instead of broadcast",
+        "All packets are unicast",
+        "Anycast replaces both",
+        "Neighbor Discovery uses broadcast"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In a three-tier campus design, which layer applies policies and route summarization? (Select the best answer.)",
+      "options": [
+        "Physical layer",
+        "Core layer",
+        "Distribution layer",
+        "Access layer"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which IPv6 prefix identifies a link-local address? (Select the best answer.)",
+      "options": [
+        "ff00::/8",
+        "fe80::/10",
+        "fc00::/7",
+        "2000::/3"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "At which OSI layer does a switch make forwarding decisions using MAC addresses? (Select the best answer.)",
+      "options": [
+        "Layer 2",
+        "Layer 3",
+        "Layer 1",
+        "Layer 4"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which transport protocol is typically used by DNS queries? (Select the best answer.)",
+      "options": [
+        "SCTP",
+        "UDP",
+        "ICMP",
+        "TCP"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A help desk receives complaints that hosts cannot reach remote networks but can reach local peers. Which two checks are most relevant first? (Select TWO answers.)",
+      "options": [
+        "Verify default gateway configuration on hosts",
+        "Verify host DNS suffix",
+        "Verify subnet mask correctness",
+        "Verify monitor brightness settings",
+        "Verify keyboard layout"
+      ],
+      "correct_answers": [
+        0,
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which 2.4 GHz non-overlapping channels are commonly used? (Select the best answer.)",
+      "options": [
+        "3, 8, and 13",
+        "1, 5, and 9",
+        "2, 7, and 12",
+        "1, 6, and 11"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A PC is 192.168.40.54/24. Which default gateway is valid for this host? (Select the best answer.)",
+      "options": [
+        "192.168.41.1",
+        "192.168.40.1",
+        "127.0.0.1",
+        "192.168.40.255"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A subnet has mask 255.255.255.248. What is the prefix length? (Select the best answer.)",
+      "options": [
+        "/27",
+        "/29",
+        "/28",
+        "/30"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which mechanism allows IPv6-only hosts to reach IPv4-only services using DNS64 and NAT64? (Select the best answer.)",
+      "options": [
+        "ISATAP",
+        "Teredo",
+        "6to4",
+        "NAT64"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which address is an example of ULA? (Select the best answer.)",
+      "options": [
+        "fd12:3456:789a::1",
+        "fe80::1",
+        "2001:db8::1",
+        "ff02::1"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which IPv6 address scope is valid only on the local link and not forwarded by routers? (Select the best answer.)",
+      "options": [
+        "Link-local",
+        "Anycast",
+        "Global unicast",
+        "Unique local"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which IPv6 address is link-local? (Select the best answer.)",
+      "options": [
+        "fe80::2c4d:1",
+        "2001:db8::10",
+        "ff02::1",
+        "fd00::10"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the wildcard mask for 255.255.255.224? (Select the best answer.)",
+      "options": [
+        "0.0.0.31",
+        "0.0.31.255",
+        "0.0.0.63",
+        "255.255.255.31"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /24 subnet? (Select the best answer.)",
+      "options": [
+        "256",
+        "126",
+        "252",
+        "127",
+        "254"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /21 subnet? (Select the best answer.)",
+      "options": [
+        "1022",
+        "2048",
+        "2046",
+        "1023",
+        "2044"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which TCP feature provides reliable, ordered delivery? (Select the best answer.)",
+      "options": [
+        "Broadcast discovery",
+        "Best-effort forwarding",
+        "Stateless header compression",
+        "Sequence numbers and acknowledgments"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the default behavior of an access switch port? (Select the best answer.)",
+      "options": [
+        "Runs STP disabled by default",
+        "Belongs to one VLAN and sends untagged frames",
+        "Uses routed port mode",
+        "Carries multiple VLANs with 802.1Q tags"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the key reason to disable unused switch ports? (Select the best answer.)",
+      "options": [
+        "Enable NAT",
+        "Reduce attack surface",
+        "Improve OSPF convergence",
+        "Increase PoE budget"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which statement about PoE is correct? (Select the best answer.)",
+      "options": [
+        "PoE works only at 1 Gbps",
+        "PoE requires fiber",
+        "Power and data can be delivered over the same Ethernet cable",
+        "PoE is a Layer 3 protocol"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which ICMPv6 message type is used for Router Solicitation? (Select the best answer.)",
+      "options": [
+        "Type 134",
+        "Type 136",
+        "Type 135",
+        "Type 133"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which duplex mismatch symptom is most likely? (Select the best answer.)",
+      "options": [
+        "PoE overload",
+        "Late collisions and poor throughput",
+        "Link goes administratively down",
+        "MAC table overflow"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A remote office needs addressing for exactly 120 hosts per VLAN with minimal waste. Which two prefixes satisfy the requirement? (Select TWO answers.)",
+      "options": [
+        "/25",
+        "/24",
+        "/26",
+        "/27",
+        "/30"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which protocol replaces ARP in IPv6 for address resolution? (Select the best answer.)",
+      "options": [
+        "RARP",
+        "LLDP",
+        "NDP",
+        "ICMPv4"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which IPv6 address type is routable on the Internet? (Select the best answer.)",
+      "options": [
+        "Multicast only",
+        "Link-local",
+        "Global unicast",
+        "Unique local"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /23 subnet? (Select the best answer.)",
+      "options": [
+        "508",
+        "512",
+        "510",
+        "255",
+        "254"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the shortest valid representation of 2001:0db8:0000:0000:0000:0000:0000:0001? (Select the best answer.)",
+      "options": [
+        "2001:db8:1::",
+        "2001:db8::1",
+        "2001::db8::1",
+        "2001:db8:0:0:0:0:0:1"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which block is RFC1918 private? (Select the best answer.)",
+      "options": [
+        "11.0.0.0/8",
+        "172.16.0.0/12",
+        "100.64.0.0/10",
+        "172.32.0.0/12"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which statement about private IPv4 addresses is correct? (Select the best answer.)",
+      "options": [
+        "They are only used by loopback interfaces",
+        "They are not routed on the public Internet",
+        "They must be publicly registered",
+        "They are globally unique and routable"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.31.255.200 with prefix /21. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.32.0.0",
+        "172.31.252.0",
+        "172.31.248.1",
+        "172.31.248.0",
+        "172.31.240.0",
+        "172.31.255.255"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.168.1.65 with prefix /26. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.168.1.127",
+        "192.168.1.64",
+        "192.168.1.128",
+        "192.168.1.0",
+        "192.168.1.65",
+        "192.168.1.96"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which is a valid host in 192.168.10.64/27? (Select the best answer.)",
+      "options": [
+        "192.168.10.63",
+        "192.168.10.96",
+        "192.168.10.94",
+        "192.168.10.95"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the IPv6 loopback address? (Select the best answer.)",
+      "options": [
+        "2001::1",
+        "::",
+        "::1",
+        "fe80::1"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.16.99.201 with prefix /28. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.16.99.207",
+        "172.16.99.193",
+        "172.16.99.176",
+        "172.16.99.200",
+        "172.16.99.208",
+        "172.16.99.192"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which address is used by Ethernet switches for frame forwarding inside a VLAN? (Select the best answer.)",
+      "options": [
+        "Destination IP address",
+        "Destination MAC address",
+        "TCP port",
+        "Source IP address"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /28 subnet? (Select the best answer.)",
+      "options": [
+        "6",
+        "12",
+        "7",
+        "16",
+        "14"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which mask corresponds to /19? (Select the best answer.)",
+      "options": [
+        "255.255.248.0",
+        "255.255.240.0",
+        "255.255.192.0",
+        "255.255.224.0"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which statement about IPv6 ULA addresses is correct? (Select the best answer.)",
+      "options": [
+        "They are typically used for private internal networks",
+        "They are only for multicast",
+        "They are equivalent to IPv4 APIPA",
+        "They are publicly routable globally"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A security architect evaluates transport behavior. Which two protocols are connection-oriented by design? (Select TWO answers.)",
+      "options": [
+        "TCP",
+        "UDP",
+        "QUIC over UDP",
+        "SCTP",
+        "ICMP"
+      ],
+      "correct_answers": [
+        0,
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A network analyst is troubleshooting excessive broadcast traffic in a flat Layer 2 segment. Which two design choices reduce broadcast scope? (Select TWO answers.)",
+      "options": [
+        "Introduce Layer 3 boundaries",
+        "Segment users with VLANs",
+        "Increase collision domain size",
+        "Disable IP addressing",
+        "Convert all links to hubs"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.10.10.10 with prefix /30. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.10.10.8",
+        "10.10.10.12",
+        "10.10.10.11",
+        "10.10.10.9",
+        "10.10.10.10",
+        "10.10.10.4"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which address is APIPA? (Select the best answer.)",
+      "options": [
+        "10.254.1.1",
+        "192.168.254.1",
+        "172.16.10.1",
+        "169.254.22.10"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.19.33.145 with prefix /27. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.19.33.144",
+        "172.19.33.159",
+        "172.19.33.160",
+        "172.19.33.96",
+        "172.19.33.129",
+        "172.19.33.128"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In EUI-64, what is modified in the MAC-derived interface ID? (Select the best answer.)",
+      "options": [
+        "The last octet is dropped",
+        "The OUI is removed",
+        "The 7th bit (U/L bit) is inverted",
+        "All Fs are replaced with zeros"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does SLAAC use to automatically assign hosts an IPv6 address? (Select the best answer.)",
+      "options": [
+        "DHCPDISCOVER",
+        "NAT",
+        "ARP",
+        "Router Advertisements"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the function of a wireless LAN controller (WLC)? (Select the best answer.)",
+      "options": [
+        "Perform NAT for clients",
+        "Centralized management of APs",
+        "Replace RADIUS",
+        "Route between VLANs"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which route summary best covers 192.168.32.0/24 through 192.168.39.0/24? (Select the best answer.)",
+      "options": [
+        "192.168.32.0/21",
+        "192.168.32.0/22",
+        "192.168.0.0/16",
+        "192.168.32.0/20"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /27 subnet? (Select the best answer.)",
+      "options": [
+        "32",
+        "28",
+        "14",
+        "30",
+        "15"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which is the broadcast address for 10.10.10.128/26? (Select the best answer.)",
+      "options": [
+        "10.10.10.127",
+        "10.10.10.190",
+        "10.10.10.255",
+        "10.10.10.191",
+        "10.10.10.129"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A design review asks for correct IPv4 private ranges. Which two are valid RFC1918 blocks? (Select TWO answers.)",
+      "options": [
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "172.32.0.0/12",
+        "192.0.2.0/24",
+        "8.8.8.0/24"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A troubleshooting checklist asks for likely signs of subnet mask mismatch on hosts. Which two are common symptoms? (Select TWO answers.)",
+      "options": [
+        "Can reach some local devices but not others in same expected subnet",
+        "Cannot resolve DNS hostname format",
+        "Sends traffic for local peers to default gateway",
+        "Switch loses startup-config",
+        "Link LEDs stop blinking permanently"
+      ],
+      "correct_answers": [
+        0,
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which transport protocol does HTTPS primarily use? (Select the best answer.)",
+      "options": [
+        "UDP",
+        "ARP",
+        "ICMP",
+        "TCP"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.8.200.11 with prefix /20. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.8.192.1",
+        "10.8.176.0",
+        "10.8.207.255",
+        "10.8.208.0",
+        "10.8.192.0",
+        "10.8.200.0"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 198.51.100.241 with prefix /29. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "198.51.100.240",
+        "198.51.100.244",
+        "198.51.100.248",
+        "198.51.100.241",
+        "198.51.100.247",
+        "198.51.100.232"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which OSI layer is responsible for logical addressing and routing? (Select the best answer.)",
+      "options": [
+        "Layer 4",
+        "Layer 3",
+        "Layer 7",
+        "Layer 2"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the purpose of Duplicate Address Detection (DAD)? (Select the best answer.)",
+      "options": [
+        "Determine MTU",
+        "Select the best default gateway",
+        "Verify an IPv6 address is unique on the link",
+        "Encrypt neighbor traffic"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.168.120.77 with prefix /28. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.168.120.64",
+        "192.168.120.80",
+        "192.168.120.65",
+        "192.168.120.79",
+        "192.168.120.48",
+        "192.168.120.72"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which ICMPv6 message carries prefix and gateway information for SLAAC? (Select the best answer.)",
+      "options": [
+        "Neighbor Solicitation",
+        "Router Advertisement",
+        "Destination Unreachable",
+        "Echo Reply"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /26 subnet? (Select the best answer.)",
+      "options": [
+        "62",
+        "30",
+        "64",
+        "31",
+        "60"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /30 subnet? (Select the best answer.)",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "1"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which metric is commonly used to describe wireless signal quality at the client? (Select the best answer.)",
+      "options": [
+        "TTL",
+        "ARP age",
+        "MSS",
+        "RSSI/SNR"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which prefix should be used if a LAN needs at least 500 usable IPv4 hosts? (Select the best answer.)",
+      "options": [
+        "/23",
+        "/24",
+        "/25",
+        "/22",
+        "/26"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.1.1.254 with prefix /24. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.1.1.255",
+        "10.1.1.0",
+        "10.1.1.1",
+        "10.1.2.0",
+        "10.1.1.128",
+        "10.1.0.0"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many /30 subnets can be created from one /24 network? (Select the best answer.)",
+      "options": [
+        "32",
+        "64",
+        "256",
+        "16",
+        "128"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does SSID identify in a WLAN? (Select the best answer.)",
+      "options": [
+        "The wireless network name",
+        "The AP MAC address",
+        "The RF channel width",
+        "The encryption key"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which MAC address type maps one sender to many receivers in Ethernet? (Select the best answer.)",
+      "options": [
+        "Broadcast FF:FF:FF:FF:FF:FF",
+        "Loopback",
+        "Anycast",
+        "Unicast"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.168.50.130 with prefix /25. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.168.50.128",
+        "192.168.51.0",
+        "192.168.50.192",
+        "192.168.50.129",
+        "192.168.50.255",
+        "192.168.50.0"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does :: represent in IPv6? (Select the best answer.)",
+      "options": [
+        "Unspecified address",
+        "Default gateway",
+        "Loopback",
+        "All routers multicast"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A branch migration enables SLAAC. Which two components are required for hosts to auto-configure addresses and gateway info? (Select TWO answers.)",
+      "options": [
+        "Router Advertisements",
+        "Neighbor Discovery",
+        "ARP replies",
+        "VTP advertisements",
+        "PAgP negotiation"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.25.100.220 with prefix /27. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.25.100.208",
+        "172.25.100.160",
+        "172.25.100.193",
+        "172.25.100.224",
+        "172.25.100.223",
+        "172.25.100.192"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A campus team is designing IPv4 addressing for growth and route summarization. Which two actions directly support efficient address utilization? (Select TWO answers.)",
+      "options": [
+        "Use VLSM to size subnets by host need",
+        "Use a single /16 for every VLAN",
+        "Summarize contiguous networks at distribution",
+        "Disable subnetting and use classful boundaries",
+        "Assign APIPA addresses for all static servers"
+      ],
+      "correct_answers": [
+        0,
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which is a valid IPv6 multicast prefix? (Select the best answer.)",
+      "options": [
+        "2000::/3",
+        "fc00::/7",
+        "fe80::/10",
+        "ff00::/8"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which Wi-Fi band generally offers more non-overlapping channels and less interference? (Select the best answer.)",
+      "options": [
+        "900 MHz",
+        "5 GHz",
+        "2.4 GHz",
+        "Both are equal"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which cable type is typically used for 1000BASE-SX? (Select the best answer.)",
+      "options": [
+        "Coaxial",
+        "Cat3 UTP",
+        "Single-mode fiber only",
+        "Multimode fiber"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What identifies an application process at Layer 4? (Select the best answer.)",
+      "options": [
+        "DSCP",
+        "MAC address",
+        "VLAN ID",
+        "Port number"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /22 subnet? (Select the best answer.)",
+      "options": [
+        "511",
+        "1022",
+        "1020",
+        "1024",
+        "510"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which topology provides high availability by using dual-homed access switches to distribution switches? (Select the best answer.)",
+      "options": [
+        "Single-homed star only",
+        "Ring without redundancy",
+        "Bus topology",
+        "Redundant two-tier design"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the purpose of a native VLAN on an 802.1Q trunk? (Select the best answer.)",
+      "options": [
+        "Encrypt traffic",
+        "Provide PoE",
+        "Carry management traffic only",
+        "Carry untagged traffic"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "An IPv6 /56 allocation to a site allows how many /64 subnets? (Select the best answer.)",
+      "options": [
+        "256",
+        "1024",
+        "512",
+        "64",
+        "128"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which IPv6 prefix length is most common for LAN interfaces? (Select the best answer.)",
+      "options": [
+        "/56",
+        "/126",
+        "/128",
+        "/48",
+        "/64"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 10.200.14.9 with prefix /29. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "10.200.14.8",
+        "10.200.14.12",
+        "10.200.14.9",
+        "10.200.14.0",
+        "10.200.14.15",
+        "10.200.14.16"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "How many usable host addresses are available in an IPv4 /29 subnet? (Select the best answer.)",
+      "options": [
+        "8",
+        "4",
+        "3",
+        "2",
+        "6"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.20.14.62 with prefix /26. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.20.13.192",
+        "172.20.14.63",
+        "172.20.14.1",
+        "172.20.14.32",
+        "172.20.14.64",
+        "172.20.14.0"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.168.7.190 with prefix /26. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.168.7.129",
+        "192.168.7.191",
+        "192.168.7.192",
+        "192.168.7.64",
+        "192.168.7.128",
+        "192.168.7.160"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 192.0.2.99 with prefix /27. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "192.0.2.112",
+        "192.0.2.96",
+        "192.0.2.97",
+        "192.0.2.128",
+        "192.0.2.127",
+        "192.0.2.64"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which two addresses are valid host addresses in subnet 10.10.8.0/22? (Choose the best pair) (Select the best answer.)",
+      "options": [
+        "10.10.7.1 and 10.10.8.2",
+        "10.10.12.1 and 10.10.9.9",
+        "10.10.8.0 and 10.10.11.255",
+        "10.10.8.1 and 10.10.11.254"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A host has IP 172.18.5.129 with prefix /25. What is the network address of this subnet? (Select the best answer.)",
+      "options": [
+        "172.18.5.192",
+        "172.18.5.128",
+        "172.18.6.0",
+        "172.18.5.255",
+        "172.18.5.129",
+        "172.18.5.0"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    }
+  ]
+}

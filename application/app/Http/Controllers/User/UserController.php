@@ -6,6 +6,8 @@ use App\Models\Job;
 use App\Models\Form;
 use App\Models\Enroll;
 use App\Models\Deposit;
+use App\Models\Lesson;
+use App\Models\LessonCompletion;
 use App\Lib\FormProcessor;
 use App\Models\Withdrawal;
 use App\Models\Transaction;
@@ -22,7 +24,12 @@ class UserController extends Controller
         $remarks = Transaction::distinct('remark')->orderBy('remark')->get('remark');
         $transactions = Transaction::where('user_id', auth()->id())->orderBy('id', 'desc')->paginate(getPaginate());
         $enroll = new Enroll();
-        $enrolls = $enroll->with('course', 'course.category')->where('user_id', auth()->id())->where('status',1)->orderBy('id', 'desc')->paginate(getPaginate());
+        $enrolls = $enroll->with([
+            'course' => function ($query) {
+                $query->with('category')->withCount(['quizzes', 'questions']);
+            }
+        ])->where('user_id', auth()->id())->where('status',1)->orderBy('id', 'desc')->paginate(getPaginate());
+        $courseProgress = $this->buildCourseProgress($enrolls->pluck('course_id')->unique()->values()->all());
         $deposit = Deposit::where('user_id', auth()->id());
         $ticket = new SupportTicket();
 
@@ -54,6 +61,7 @@ class UserController extends Controller
             'transactions',
             'enroll',
             'enrolls',
+            'courseProgress',
             'deposit',
             'ticket',
             'enrollChart',
@@ -230,5 +238,38 @@ class UserController extends Controller
 
         $notify[] = ['success', 'Registration process completed successfully'];
         return to_route('user.home')->withNotify($notify);
+    }
+
+    private function buildCourseProgress(array $courseIds): array
+    {
+        if (empty($courseIds)) {
+            return [];
+        }
+
+        $lessonTotals = Lesson::whereIn('course_id', $courseIds)
+            ->where('status', 1)
+            ->selectRaw('course_id, COUNT(*) as total_lessons')
+            ->groupBy('course_id')
+            ->pluck('total_lessons', 'course_id');
+
+        $completedTotals = LessonCompletion::where('user_id', auth()->id())
+            ->whereIn('course_id', $courseIds)
+            ->selectRaw('course_id, COUNT(DISTINCT lesson_id) as completed_lessons')
+            ->groupBy('course_id')
+            ->pluck('completed_lessons', 'course_id');
+
+        $progress = [];
+        foreach ($courseIds as $courseId) {
+            $total = (int) ($lessonTotals[$courseId] ?? 0);
+            $completed = (int) ($completedTotals[$courseId] ?? 0);
+            $percent = $total > 0 ? (int) floor(($completed / $total) * 100) : 0;
+            $progress[$courseId] = [
+                'completed' => $completed,
+                'total' => $total,
+                'percent' => $percent,
+            ];
+        }
+
+        return $progress;
     }
 }

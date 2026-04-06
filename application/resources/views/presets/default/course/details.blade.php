@@ -23,18 +23,31 @@
                             </li>
                         </ul>
                         <ul class="key-wrap">
-                            <li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ str_replace('ago', '', diffForHumans(@$course->created_at)) }}">
                                 <i class="fa-solid fa-clock"></i>
                                 <p>{{ str_replace('ago', '', diffForHumans(@$course->created_at)) }}</p>
                             </li>
-                            <li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ $course->enrolls->count() }} @lang('Students')">
                                 <i class="fa-solid fa-graduation-cap"></i>
                                 <p>{{ $course->enrolls->count() }} @lang('Students')</p>
                             </li>
 
-                            <li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ @$course->lessons->count() }} @lang('Lessons')">
                                 <i class="fa-solid fa-file-video"></i>
                                 <p>{{ @$course->lessons->count() }} @lang('Lessons')</p>
+                            </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ $course->quizzes_count ?? 0 }} @lang('Quizzes')">
+                                <i class="fa-solid fa-list-check"></i>
+                                <p>{{ $course->quizzes_count ?? 0 }} @lang('Quizzes')</p>
+                            </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ $course->questions_count ?? 0 }} @lang('Questions')">
+                                <i class="fa-solid fa-circle-question"></i>
+                                <p>{{ $course->questions_count ?? 0 }} @lang('Questions')</p>
                             </li>
 
                         </ul>
@@ -1592,6 +1605,54 @@
                 $('.accordion-item').css('animation-name', 'fadeInUp');
                 $(this).remove();
             });
+
+            // ── Lesson Sort Persistence (localStorage) ─────────────────────────────
+            (function () {
+                var courseId = @json($course->id);
+                var storageKey = 'lesson_sort_course_' + courseId;
+
+                // Helper: get the lesson_sort value from the current URL query string
+                function getSortFromUrl() {
+                    var params = new URLSearchParams(window.location.search);
+                    return params.get('lesson_sort') || null;
+                }
+
+                // Helper: build a URL with the lesson_sort param set (keeps other params)
+                function buildSortUrl(sortValue) {
+                    var params = new URLSearchParams(window.location.search);
+                    if (!sortValue || sortValue === 'default') {
+                        params.delete('lesson_sort');
+                    } else {
+                        params.set('lesson_sort', sortValue);
+                    }
+                    var qs = params.toString();
+                    return window.location.pathname + (qs ? '?' + qs : '');
+                }
+
+                var urlSort = getSortFromUrl();
+
+                if (urlSort !== null) {
+                    // URL has an explicit sort param → save it to localStorage
+                    try { localStorage.setItem(storageKey, urlSort); } catch (e) {}
+                } else {
+                    // No sort param in URL → check localStorage for a saved preference
+                    var savedSort = null;
+                    try { savedSort = localStorage.getItem(storageKey); } catch (e) {}
+
+                    if (savedSort && savedSort !== 'default') {
+                        // Redirect so the server renders lessons with the saved sort
+                        window.location.replace(buildSortUrl(savedSort));
+                        return; // stop further JS execution during redirect
+                    }
+                }
+
+                // Save preference whenever the dropdown changes
+                $(document).on('change', '#lesson-sort-filter', function () {
+                    var val = $(this).val() || 'default';
+                    try { localStorage.setItem(storageKey, val); } catch (e) {}
+                });
+            })();
+            // ── End Lesson Sort Persistence ─────────────────────────────────────────
 
             // Load more lessons handler
             $(document).on('click', '#load-more-lessons', function(e) {

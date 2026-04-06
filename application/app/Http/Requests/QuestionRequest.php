@@ -25,19 +25,21 @@ class QuestionRequest extends FormRequest
     {
         $rules = [
             'question' => "required",
-            'correct_answer' => "required",
+            'explanation' => "nullable|string",
+            'correct_answer' => "required|array|min:1",
+            'correct_answer.*' => "required|integer|min:0",
             'options' => "array",
             'options.*' => "required",
             'mark' => "required",
         ];
 
         if (request()->method() == "POST") {
-            $rules['image'] = ['required', 'max:3072', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'])];
+            $rules['image'] = ['nullable', 'max:3072', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'])];
         }
         
         if (request()->method() == "PUT") {
       
-            $rules['image'] = ['max:3072','image', new FileTypeValidate(['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'])];
+            $rules['image'] = ['nullable', 'max:3072', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'])];
         }
         return $rules;
     }

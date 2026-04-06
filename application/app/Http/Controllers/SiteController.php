@@ -34,6 +34,7 @@ class SiteController extends Controller
 
         $categories = Category::with('courses')->where('status', 1)->orderBy('id', 'desc')->get();
         $courses = Course::with('lessons', 'category', 'enrolls')
+            ->withCount(['quizzes', 'questions'])
             ->where('admin_status', 1)
             ->where('status', 1)
             ->orderBy('id', 'desc')
@@ -179,6 +180,7 @@ class SiteController extends Controller
         $pageTitle = 'Course';
         $categories = Category::with('courses')->where('status', 1)->orderBy('id', 'desc')->get();
         $courses = Course::with('lessons', 'category', 'enrolls', 'reviews')
+            ->withCount(['quizzes', 'questions'])
             ->where('admin_status', 1)
             ->where('status', 1)
             ->orderBy('id', 'desc');
@@ -195,6 +197,7 @@ class SiteController extends Controller
         $pageTitle = 'Course';
         $categories = Category::with('courses')->where('status', 1)->orderBy('id', 'desc')->get();
         $courses = Course::with('lessons', 'category', 'enrolls', 'reviews')
+            ->withCount(['quizzes', 'questions'])
             ->where('admin_status', 1)
             ->where('status', 1)
             ->orderBy('id', 'desc');
@@ -237,7 +240,7 @@ class SiteController extends Controller
             'lessons' => function ($query) {
                 $query->where('status', 1)->orderBy('id', 'asc');
             }
-        ])->where('id', $id)->where('admin_status', 1)->where('status', 1)->first();
+        ])->withCount(['quizzes', 'questions'])->where('id', $id)->where('admin_status', 1)->where('status', 1)->first();
 
         $pageTitle = 'Course';
         $ad = Ad::orderBy('id', 'desc')->first();
@@ -497,11 +500,11 @@ class SiteController extends Controller
     public function categoryCourse(Request $request)
     {
         $courses = Course::with('lessons', 'category', 'enrolls')
-
-        ->where('admin_status', 1)
-        ->where('status', 1)
-        ->orderBy('id', 'desc')
-        ->take(12);
+            ->withCount(['quizzes', 'questions'])
+            ->where('admin_status', 1)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->take(12);
         if($request->id == 0){
             $courses = $courses->get();
         }else{

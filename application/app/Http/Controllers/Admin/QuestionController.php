@@ -35,9 +35,12 @@ class QuestionController extends Controller
         }
         $pageTitle = 'Create Question';
         $question = new Question();
+        $correctAnswers = collect($request->correct_answer)->map(fn ($answer) => (int) $answer)->unique()->values();
         $question->quiz_id = $id;
         $question->question = $request->question;
-        $question->correct_answer = $request->correct_answer;
+        $question->explanation = $request->explanation;
+        $question->correct_answer = (int) $correctAnswers->first();
+        $question->correct_answers = $correctAnswers->all();
         $question->options = $request->options;
         $question->mark = $request->mark;
         if ($request->hasFile('image')) {
@@ -66,10 +69,13 @@ class QuestionController extends Controller
     {
         $quiz = $this->checkQuizId($quiz_id);
         $question = Question::findOrFail($question_id);
+        $correctAnswers = collect($request->correct_answer)->map(fn ($answer) => (int) $answer)->unique()->values();
         $oldImage = $question->image;
         $question->quiz_id = $quiz_id;
         $question->question = $request->question;
-        $question->correct_answer = $request->correct_answer;
+        $question->explanation = $request->explanation;
+        $question->correct_answer = (int) $correctAnswers->first();
+        $question->correct_answers = $correctAnswers->all();
         $question->options = $request->options;
         $question->mark = $request->mark;
         if ($request->hasFile('image')) {

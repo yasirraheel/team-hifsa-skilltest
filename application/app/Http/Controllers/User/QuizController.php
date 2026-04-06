@@ -28,14 +28,14 @@ class QuizController extends Controller
             return to_route('user.home')->withNotify($notify);
         }
 
-        $quizzes = Quiz::with('questions')->where('course_id', $course_id)->paginate(getPaginate());
+        $quizzes = Quiz::with('questions', 'course')->where('course_id', $course_id)->paginate(getPaginate());
         return view($this->activeTemplate . 'user.quiz.list', compact('pageTitle', 'quizzes'));
     }
 
     public function quizDetails($id)
     {
         $pageTitle = "Quiz Details";
-        $quiz = Quiz::with('questions', 'user', 'admin')->where('id', $id)->first();
+        $quiz = Quiz::with('questions', 'user', 'admin', 'course')->where('id', $id)->first();
         return view($this->activeTemplate . 'user.quiz.details', compact('pageTitle', 'quiz'));
     }
 
@@ -68,9 +68,17 @@ class QuizController extends Controller
 
     public function quizAnswer(Request $request)
     {
-        $pageTitle = "Quiz Start";
+        $request->validate([
+            'quiz_id' => 'required|integer|exists:quizzes,id',
+            'question_id' => 'required|integer|exists:questions,id',
+            'user_answer' => 'required|array|min:0',
+            'user_answer.*' => 'integer|min:0',
+        ]);
+
         $quiz = Quiz::findOrFail($request->quiz_id);
         $question = Question::findOrFail($request->question_id);
+        $userAnswers = collect($request->user_answer)->map(fn ($answer) => (int) $answer)->unique()->sort()->values()->all();
+        $correctAnswers = $question->normalizedCorrectAnswers();
 
         DB::table('quiz_user')
             ->where('quiz_id', $quiz->id)
@@ -78,11 +86,15 @@ class QuizController extends Controller
             ->where('question_id', $question->id)
             ->delete();
 
+        if (empty($userAnswers)) {
+            return response()->json(['success' => true]);
+        }
+
         $quiz->userQuizzes()->attach(auth()->id(), [
             'question_id' => $question->id,
             'mark' => $question->mark,
-            'user_answer' => $request->user_answer,
-            'correct_answer' => $question->correct_answer,
+            'user_answer' => json_encode($userAnswers),
+            'correct_answer' => json_encode($correctAnswers),
         ]);
 
         return response()->json(['success' => true]);

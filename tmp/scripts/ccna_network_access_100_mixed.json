@@ -1,0 +1,1409 @@
+{
+  "count": 100,
+  "stats": {
+    "single": 90,
+    "multi": 10,
+    "opt4": 37,
+    "opt5": 39,
+    "opt6": 24
+  },
+  "questions": [
+    {
+      "question": "Which STP port role forwards traffic toward the root bridge? (Select the best answer.)",
+      "options": [
+        "Disabled port",
+        "Designated blocked port",
+        "Root port",
+        "Backup port",
+        "Alternate port"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which feature shuts down a PortFast-enabled port if a BPDU is received? (Select the best answer.)",
+      "options": [
+        "Loop Guard",
+        "Root Guard",
+        "BPDU Guard",
+        "UDLD"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which RSTP port role provides a backup path to the root bridge? (Select the best answer.)",
+      "options": [
+        "Alternate",
+        "Designated",
+        "Disabled",
+        "Root",
+        "Primary"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "When two paths to the root have equal cost, what STP tie-breaker is considered next? (Select the best answer.)",
+      "options": [
+        "Highest VLAN ID",
+        "Lowest upstream bridge ID",
+        "Lowest duplex setting",
+        "Highest interface MTU",
+        "Native VLAN number"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which wireless issue is most likely when AP transmit power is set too high across many APs? (Select the best answer.)",
+      "options": [
+        "Native VLAN mismatch",
+        "PAgP negotiation failure",
+        "Sticky clients and increased co-channel contention",
+        "OSPF adjacency reset",
+        "Port-security violation"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enters Port-Channel interface 2 configuration mode? (Select the best answer.)",
+      "options": [
+        "interface channel-group 2",
+        "channel-group 2 mode active",
+        "interface po/2",
+        "port-channel interface 2",
+        "interface port-channel 2",
+        "interface bundle 2"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enters Port-Channel interface 20 configuration mode? (Select the best answer.)",
+      "options": [
+        "interface po/20",
+        "interface port-channel 20",
+        "channel-group 20 mode active",
+        "interface channel-group 20",
+        "port-channel interface 20"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Two switches use an 802.1Q trunk. Which command changes the native VLAN to 99? (Select the best answer.)",
+      "options": [
+        "switchport access vlan 99",
+        "encapsulation dot1q 99",
+        "vlan native 99",
+        "switchport trunk native vlan 99",
+        "switchport trunk allowed vlan 99",
+        "spanning-tree vlan 99 root primary"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does VTP primarily distribute between switches in the same VTP domain? (Select the best answer.)",
+      "options": [
+        "Wireless RF profiles",
+        "ARP caches",
+        "Port security MAC lists",
+        "VLAN database information",
+        "Routing tables"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In FlexConnect mode, what is one key branch-site benefit? (Select the best answer.)",
+      "options": [
+        "Forces all traffic to controller",
+        "Eliminates AP management",
+        "Local switching at the AP during WAN outages",
+        "Only in transparent mode",
+        "Disables WLAN encryption",
+        "Requires no VLAN mapping"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is sticky MAC learning in Cisco port security? (Select the best answer.)",
+      "options": [
+        "A trunk-only feature",
+        "A DHCP snooping option",
+        "Dynamically learned MACs are written into running-config as secure",
+        "MACs learned only from ARP replies",
+        "Static-only MAC mode",
+        "Only in transparent mode"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does PortFast do on an edge access port? (Select the best answer.)",
+      "options": [
+        "Disables STP globally",
+        "Creates an EtherChannel",
+        "Makes port a trunk",
+        "Only in transparent mode",
+        "Blocks BPDUs",
+        "Transitions the port quickly to forwarding state"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Two switches use an 802.1Q trunk. Which command changes the native VLAN to 4094? (Select the best answer.)",
+      "options": [
+        "encapsulation dot1q 4094",
+        "vlan native 4094",
+        "switchport access vlan 4094",
+        "switchport trunk allowed vlan 4094",
+        "switchport trunk native vlan 4094",
+        "spanning-tree vlan 4094 root primary"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enters Port-Channel interface 1 configuration mode? (Select the best answer.)",
+      "options": [
+        "interface po/1",
+        "port-channel interface 1",
+        "interface channel-group 1",
+        "channel-group 1 mode active",
+        "interface port-channel 1"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In wireless roaming, what best describes Layer 2 roaming? (Select the best answer.)",
+      "options": [
+        "Only works in 2.4 GHz",
+        "Disables encryption during handoff",
+        "Only in transparent mode",
+        "Client always receives a new IP",
+        "Requires WAN routing",
+        "Client moves APs within same subnet/VLAN without IP change"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "If bridge ID tie still exists, what is the next tiebreaker for root port election? (Select the best answer.)",
+      "options": [
+        "Lowest sender port ID",
+        "Highest path cost",
+        "Highest sender MAC",
+        "Lowest destination MAC"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enables an SVI for VLAN 20 with an IP address? (Select the best answer.)",
+      "options": [
+        "interface gigabitEthernet0/20",
+        "vlan 20 ip address",
+        "ip vlan 20",
+        "interface vlan 20"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 20. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "ip access-group 20 in",
+        "switchport trunk allowed vlan 20",
+        "vlan database 20",
+        "switchport access vlan 20"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which AP deployment approach is most aligned with campus high-density best practice? (Select the best answer.)",
+      "options": [
+        "Only in transparent mode",
+        "No controller profiles",
+        "Only 2.4 GHz enabled",
+        "Maximum power on all APs",
+        "Single AP per floor regardless load",
+        "Planned channel/power design with validation survey"
+      ],
+      "correct_answers": [
+        5
+      ],
+      "mark": 1
+    },
+    {
+      "question": "On a non-root switch segment, which port role forwards frames away from the segment toward hosts? (Select the best answer.)",
+      "options": [
+        "Root port",
+        "Alternate port",
+        "Designated port",
+        "Backup port"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A voice deployment needs segmentation and QoS consistency. Which two switchport features are commonly used at the edge? (Select TWO answers.)",
+      "options": [
+        "Access VLAN for data",
+        "Voice VLAN for IP phones",
+        "SVI shutdown",
+        "BPDU filter global",
+        "Trunk all user ports"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In LACP, which mode responds to LACP packets but does not initiate? (Select the best answer.)",
+      "options": [
+        "desirable",
+        "active",
+        "passive",
+        "on"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enters Port-Channel interface 10 configuration mode? (Select the best answer.)",
+      "options": [
+        "port-channel interface 10",
+        "interface po/10",
+        "channel-group 10 mode active",
+        "interface port-channel 10",
+        "interface channel-group 10"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Using short path cost values, what is the typical STP cost of a 100 Mbps link? (Select the best answer.)",
+      "options": [
+        "20",
+        "39",
+        "29",
+        "38",
+        "19",
+        "18"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In classic 802.1D STP, what are the two transitional states before forwarding? (Select the best answer.)",
+      "options": [
+        "Idle and Active",
+        "Observe and Discover",
+        "Only in transparent mode",
+        "Listening and Learning",
+        "Init and Ready",
+        "Discarding and Alternate"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which AP mode serves clients and forwards traffic through a WLC? (Select the best answer.)",
+      "options": [
+        "Monitor mode",
+        "Local mode",
+        "Rogue detector mode",
+        "Sniffer mode"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which wireless security option is considered strongest for modern enterprise deployments? (Select the best answer.)",
+      "options": [
+        "MAC filtering only",
+        "WPA with TKIP",
+        "Open SSID",
+        "WEP",
+        "WPA3 with SAE/Enterprise mechanisms"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 80. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "switchport trunk allowed vlan 80",
+        "vlan database 80",
+        "ip access-group 80 in",
+        "switchport access vlan 80"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which mechanism is commonly used to centrally authenticate WLAN users? (Select the best answer.)",
+      "options": [
+        "NTP",
+        "TFTP",
+        "SNMP traps",
+        "RADIUS"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 10. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "switchport trunk allowed vlan 10",
+        "encapsulation dot1q 10",
+        "switchport access vlan 10",
+        "vlan database 10",
+        "spanning-tree vlan 10 priority 4096",
+        "ip access-group 10 in"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does the command 'switchport trunk allowed vlan 10,20,30' do? (Select the best answer.)",
+      "options": [
+        "Creates VLANs 10,20,30",
+        "Disables DTP",
+        "Restricts trunk forwarding to VLANs 10, 20, and 30",
+        "Prunes all VLANs except VLAN 1",
+        "Makes VLAN 30 native"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "RSTP combines blocking/listening/disabled into which common state? (Select the best answer.)",
+      "options": [
+        "Learning",
+        "Forwarding",
+        "Passive",
+        "Discarding"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command verifies STP root information for all VLANs? (Select the best answer.)",
+      "options": [
+        "show spanning-tree root",
+        "show cdp root",
+        "show interfaces trunk",
+        "show vlan root",
+        "show stp timers"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Two switches use an 802.1Q trunk. Which command changes the native VLAN to 999? (Select the best answer.)",
+      "options": [
+        "encapsulation dot1q 999",
+        "switchport access vlan 999",
+        "switchport trunk native vlan 999",
+        "vlan native 999"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which switch becomes root bridge in STP by default? (Select the best answer.)",
+      "options": [
+        "The switch with the lowest bridge ID",
+        "The switch with most ports",
+        "The switch with highest MAC",
+        "The oldest switch",
+        "The access-layer switch"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which VLAN is used by default on a Cisco switch access port before configuration? (Select the best answer.)",
+      "options": [
+        "Native VLAN",
+        "VLAN 1",
+        "No VLAN",
+        "VLAN 10",
+        "VLAN 1002"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which issue is most associated with a native VLAN mismatch between trunk peers? (Select the best answer.)",
+      "options": [
+        "Untagged traffic can leak into the wrong VLAN",
+        "Only in transparent mode",
+        "The trunk always goes down",
+        "PoE stops working",
+        "CDP is disabled",
+        "IPv6 is blocked"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In STP, what is the bridge ID composed of? (Select the best answer.)",
+      "options": [
+        "Priority and MAC address",
+        "VLAN ID and port cost",
+        "IP address and priority",
+        "MAC address only"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which channel widths are commonly used in Wi-Fi design tradeoffs? (Select the best answer.)",
+      "options": [
+        "20, 40, 80, and 160 MHz",
+        "200 and 400 MHz",
+        "Only 20 MHz",
+        "5, 10, and 15 MHz only"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the primary role of a voice VLAN on an access port? (Select the best answer.)",
+      "options": [
+        "Replace trunking",
+        "Separate IP phone traffic from data traffic",
+        "Tunnel CAPWAP traffic",
+        "Only in transparent mode",
+        "Eliminate DHCP",
+        "Disable QoS marking"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which design concern is directly related to co-channel interference (CCI)? (Select the best answer.)",
+      "options": [
+        "BPDU guard err-disable",
+        "Mismatched native VLAN",
+        "Incorrect EtherChannel hashing",
+        "Too many nearby APs using the same channel",
+        "LACP passive-passive"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A network engineer configures EtherChannel with LACP. Which two mode pairings can form a channel? (Select TWO answers.)",
+      "options": [
+        "active-active",
+        "active-passive",
+        "passive-passive",
+        "auto-auto",
+        "desirable-auto"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the role of a lightweight AP in centralized WLAN architecture? (Select the best answer.)",
+      "options": [
+        "Operates as standalone router",
+        "Relies on WLC for most control-plane functions",
+        "Runs VTP server",
+        "Performs Layer 3 NAT by default"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "An operations team validates trunk hardening. Which two actions are security best practices? (Select TWO answers.)",
+      "options": [
+        "Prune unused VLANs from trunks",
+        "Set explicit native VLAN and avoid VLAN 1 for user data",
+        "Allow all VLANs by default",
+        "Enable DTP dynamic desirable everywhere",
+        "Disable STP on trunk links"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does 802.1X provide in WLAN access design? (Select the best answer.)",
+      "options": [
+        "Port-based network access control using authentication",
+        "IPv6 address compression",
+        "Automatic AP reboot",
+        "RF channel bonding"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which port-security violation mode drops violating traffic but keeps port up and logs counters? (Select the best answer.)",
+      "options": [
+        "restrict",
+        "disable",
+        "protect-all",
+        "errdisable",
+        "shutdown"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A wireless deployment in a busy office has high co-channel contention. Which two changes commonly help? (Select TWO answers.)",
+      "options": [
+        "Reduce channel width in dense areas",
+        "Tune AP transmit power based on survey",
+        "Disable 5 GHz radios",
+        "Set all APs to maximum power",
+        "Force every SSID to open authentication"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command prevents a port from negotiating trunking via DTP? (Select the best answer.)",
+      "options": [
+        "spanning-tree bpduguard enable",
+        "no cdp enable",
+        "switchport mode access",
+        "duplex full",
+        "switchport nonegotiate"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which VTP mode can create, modify, and delete VLANs and advertise them? (Select the best answer.)",
+      "options": [
+        "Transparent mode",
+        "Client mode",
+        "Off mode",
+        "Server mode"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is a common impact of using very wide channels (for example 80/160 MHz) in dense environments? (Select the best answer.)",
+      "options": [
+        "No need for transmit power tuning",
+        "Higher potential throughput but reduced channel reuse",
+        "Only in transparent mode",
+        "Automatic elimination of hidden nodes",
+        "No DFS requirements",
+        "Guaranteed lower interference"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "On an 802.1Q trunk, what happens to frames in the native VLAN by default? (Select the best answer.)",
+      "options": [
+        "They are double-tagged",
+        "They are encrypted",
+        "They are converted to multicast",
+        "They are sent untagged",
+        "They are dropped"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which mode combination forms a PAgP channel? (Select the best answer.)",
+      "options": [
+        "on with auto",
+        "desirable with auto (or desirable with desirable)",
+        "auto with auto",
+        "passive with passive"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Using short path cost values, what is the typical STP cost of a 10 Mbps link? (Select the best answer.)",
+      "options": [
+        "101",
+        "110",
+        "100",
+        "200",
+        "99"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the key advantage of 5 GHz over 2.4 GHz in enterprise WLAN design? (Select the best answer.)",
+      "options": [
+        "No need for channel planning",
+        "No co-channel interference",
+        "Longer propagation through walls always",
+        "No DFS rules",
+        "More non-overlapping channels and typically less interference"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which EtherChannel protocol is Cisco proprietary? (Select the best answer.)",
+      "options": [
+        "STP",
+        "L2TP",
+        "LACP",
+        "PAgP"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the primary purpose of a guest WLAN in enterprise design? (Select the best answer.)",
+      "options": [
+        "Grant full LAN access",
+        "Bypass captive portal",
+        "Provide isolated Internet access for untrusted users",
+        "Carry AP control traffic",
+        "Disable AAA"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the function of CAPWAP in Cisco wireless architectures? (Select the best answer.)",
+      "options": [
+        "Replaces 802.11 headers",
+        "Disables roaming",
+        "Provides DHCP to clients",
+        "Performs NAT at AP",
+        "Carries control/data traffic between AP and WLC"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the main purpose of Spanning Tree Protocol? (Select the best answer.)",
+      "options": [
+        "Provide DHCP services",
+        "Encrypt VLAN traffic",
+        "Prevent Layer 2 loops",
+        "Route between VLANs"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which AP mode is designed to detect rogue APs and perform IDS functions rather than serve clients? (Select the best answer.)",
+      "options": [
+        "Monitor mode",
+        "Only in transparent mode",
+        "FlexConnect local switching",
+        "Bridge mode",
+        "Local mode",
+        "Mesh RAP mode"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which LACP mode combination forms a channel? (Select the best answer.)",
+      "options": [
+        "on-passive",
+        "active-active or active-passive",
+        "Only in transparent mode",
+        "desirable-desirable only",
+        "auto-desirable",
+        "passive-passive"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Using short path cost values, what is the typical STP cost of a 10 Gbps link? (Select the best answer.)",
+      "options": [
+        "1",
+        "2",
+        "12",
+        "3",
+        "4",
+        "22"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "For a reliable EtherChannel, what must match across member interfaces? (Select the best answer.)",
+      "options": [
+        "Only IP address",
+        "Only in transparent mode",
+        "Only cable type",
+        "Speed, duplex, VLAN/trunk settings, and allowed VLANs",
+        "Only hostname",
+        "Only STP priority"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Why should unused access ports be assigned to an unused VLAN and shutdown? (Select the best answer.)",
+      "options": [
+        "To disable MAC learning globally",
+        "To speed up OSPF",
+        "To reduce unauthorized access risk",
+        "Only in transparent mode",
+        "To increase trunk bandwidth",
+        "To force full duplex"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "In a router-on-a-stick design, what is required on the switch link to the router? (Select the best answer.)",
+      "options": [
+        "An EtherChannel in PAgP desirable mode",
+        "A private VLAN",
+        "A routed port",
+        "An 802.1Q trunk",
+        "PortFast on both sides"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command verifies EtherChannel summary status? (Select the best answer.)",
+      "options": [
+        "show lacp counters",
+        "show etherchannel summary",
+        "show vlan port-channel",
+        "show pagp neighbors",
+        "show interfaces trunk"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does switchport port-security maximum 2 enforce? (Select the best answer.)",
+      "options": [
+        "Disables BPDU Guard",
+        "Allows up to two secure MAC addresses on the port",
+        "Limits to two Mbps",
+        "Allows two VLANs"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does SNR indicate in wireless design? (Select the best answer.)",
+      "options": [
+        "Switch stack priority",
+        "Signal quality relative to background noise",
+        "Number of SSIDs",
+        "EtherChannel load-balance ratio"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What does Root Guard protect against? (Select the best answer.)",
+      "options": [
+        "Duplex mismatch",
+        "An unexpected switch becoming root on that port",
+        "Native VLAN mismatch",
+        "MAC flooding",
+        "Broadcast storms only"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which LACP mode actively sends negotiation packets? (Select the best answer.)",
+      "options": [
+        "active",
+        "on",
+        "desirable",
+        "passive",
+        "auto"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which frame field carries VLAN tagging information on 802.1Q trunks? (Select the best answer.)",
+      "options": [
+        "Tag Protocol Identifier and Tag Control Information",
+        "Source MAC extension bit",
+        "Preamble",
+        "FCS only"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A branch uses controller-based WLAN. Which two statements are correct for CAPWAP operation? (Select TWO answers.)",
+      "options": [
+        "APs establish control connectivity to the WLC",
+        "Data/control can traverse CAPWAP tunnels depending on mode",
+        "CAPWAP replaces DHCP",
+        "CAPWAP disables roaming",
+        "CAPWAP requires STP root on AP"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which statement is true about SSID hiding as a security control? (Select the best answer.)",
+      "options": [
+        "It provides minimal real security by itself",
+        "It replaces strong encryption",
+        "It stops deauthentication attacks",
+        "It prevents frame capture"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 50. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "ip access-group 50 in",
+        "switchport trunk allowed vlan 50",
+        "spanning-tree vlan 50 priority 4096",
+        "encapsulation dot1q 50",
+        "switchport access vlan 50",
+        "vlan database 50"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 70. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "switchport access vlan 70",
+        "switchport trunk allowed vlan 70",
+        "ip access-group 70 in",
+        "vlan database 70",
+        "spanning-tree vlan 70 priority 4096",
+        "encapsulation dot1q 70"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 60. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "vlan database 60",
+        "ip access-group 60 in",
+        "switchport trunk allowed vlan 60",
+        "switchport access vlan 60"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is RSSI primarily used to represent in WLAN troubleshooting? (Select the best answer.)",
+      "options": [
+        "Router CPU usage",
+        "Switch buffer utilization",
+        "Received signal strength at the client",
+        "DHCP lease time"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Two switches use an 802.1Q trunk. Which command changes the native VLAN to 200? (Select the best answer.)",
+      "options": [
+        "vlan native 200",
+        "spanning-tree vlan 200 root primary",
+        "switchport access vlan 200",
+        "encapsulation dot1q 200",
+        "switchport trunk native vlan 200",
+        "switchport trunk allowed vlan 200"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which verification command shows VLAN-to-port assignments on a switch? (Select the best answer.)",
+      "options": [
+        "show interfaces status err-disabled",
+        "show vlan brief",
+        "show ip route",
+        "show cdp neighbors detail"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which device typically maps SSIDs to VLANs in controller-based WLANs? (Select the best answer.)",
+      "options": [
+        "Layer 2 access switch only",
+        "DHCP server",
+        "Wireless LAN Controller",
+        "RADIUS server",
+        "Core router"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 30. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "vlan database 30",
+        "switchport access vlan 30",
+        "encapsulation dot1q 30",
+        "switchport trunk allowed vlan 30",
+        "spanning-tree vlan 30 priority 4096",
+        "ip access-group 30 in"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command sets a switchport to carry multiple VLANs? (Select the best answer.)",
+      "options": [
+        "switchport mode trunk",
+        "switchport nonegotiate",
+        "ip routing",
+        "switchport mode access"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Loop Guard is most useful on which type of STP ports? (Select the best answer.)",
+      "options": [
+        "Routed ports",
+        "SVI interfaces",
+        "Non-designated ports where BPDUs are expected",
+        "Edge host ports",
+        "Port-channel logical interfaces only"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which STP timer defines how long a switch waits before changing topology information? (Select the best answer.)",
+      "options": [
+        "Max Age",
+        "Forward Delay",
+        "Hold Time",
+        "Hello Time"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which protocol dynamically negotiates trunk links on Cisco switches? (Select the best answer.)",
+      "options": [
+        "DTP",
+        "VTP",
+        "LLDP",
+        "STP",
+        "LACP"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which condition commonly causes topology change notifications in STP? (Select the best answer.)",
+      "options": [
+        "Only in transparent mode",
+        "Adding static routes",
+        "ACL update",
+        "A forwarding port moving to blocking or link down/up",
+        "NTP drift",
+        "Changing DNS server"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which port-security mode places the port into err-disabled state on violation by default? (Select the best answer.)",
+      "options": [
+        "shutdown",
+        "monitor",
+        "restrict",
+        "protect"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the best reason to disable DTP on an explicitly configured trunk? (Select the best answer.)",
+      "options": [
+        "Disable STP",
+        "Reduce unintended trunk formation risk",
+        "Increase PoE budget",
+        "Enable VTP server mode"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A trunk between distribution switches fails to pass expected VLAN traffic. Which two checks are highest priority? (Select TWO answers.)",
+      "options": [
+        "Allowed VLAN list on both ends",
+        "Native VLAN consistency on both ends",
+        "Console line password",
+        "Router loopback status",
+        "NTP stratum"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "An STP root bridge election review is underway. Which two values influence bridge ID selection? (Select TWO answers.)",
+      "options": [
+        "Bridge priority",
+        "Switch MAC address",
+        "ARP timeout",
+        "Interface duplex",
+        "Native VLAN"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user port must be placed in VLAN 40. Which interface command applies the VLAN to an access port? (Select the best answer.)",
+      "options": [
+        "switchport trunk allowed vlan 40",
+        "vlan database 40",
+        "switchport access vlan 40",
+        "ip access-group 40 in"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the main benefit of EtherChannel? (Select the best answer.)",
+      "options": [
+        "Bundles multiple physical links into one logical link",
+        "Creates VLANs automatically",
+        "Eliminates STP",
+        "Encrypts traffic"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "mark": 1
+    },
+    {
+      "question": "For secure access edge design, which two controls reduce unauthorized endpoint access most directly? (Select TWO answers.)",
+      "options": [
+        "Port security",
+        "Disable and isolate unused ports",
+        "Enable dynamic desirable on user ports",
+        "Set native VLAN to production user VLAN",
+        "Disable all logging"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A user VLAN is moved to a new switch. Which two interface commands are required on an access port for VLAN assignment? (Select TWO answers.)",
+      "options": [
+        "switchport mode access",
+        "switchport access vlan <id>",
+        "switchport trunk encapsulation dot1q",
+        "ip routing",
+        "spanning-tree mode rapid-pvst"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command enters Port-Channel interface 5 configuration mode? (Select the best answer.)",
+      "options": [
+        "interface po/5",
+        "interface port-channel 5",
+        "port-channel interface 5",
+        "interface channel-group 5"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Using short path cost values, what is the typical STP cost of a 1 Gbps link? (Select the best answer.)",
+      "options": [
+        "5",
+        "8",
+        "3",
+        "4"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which command is used to make a switch the root bridge for a VLAN in Cisco best-practice style? (Select the best answer.)",
+      "options": [
+        "stp root primary vlan <id>",
+        "spanning-tree vlan <id> root primary",
+        "spanning-tree root vlan <id>",
+        "root-bridge vlan <id>"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "Which protocol is standards-based for negotiating EtherChannel? (Select the best answer.)",
+      "options": [
+        "PAgP",
+        "VTP",
+        "DTP",
+        "UDLD",
+        "LACP"
+      ],
+      "correct_answers": [
+        4
+      ],
+      "mark": 1
+    },
+    {
+      "question": "A campus experiences intermittent Layer 2 loops from unmanaged edge devices. Which two protections are best at access ports? (Select TWO answers.)",
+      "options": [
+        "PortFast",
+        "BPDU Guard",
+        "Disable CDP globally",
+        "Increase STP hello to 30s",
+        "Enable VTP server on all access switches"
+      ],
+      "correct_answers": [
+        0,
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "What is the primary purpose of creating VLANs in a campus network? (Select the best answer.)",
+      "options": [
+        "To eliminate ARP",
+        "To create separate broadcast domains",
+        "To increase cable length",
+        "To replace routing"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "mark": 1
+    },
+    {
+      "question": "If one physical link in an EtherChannel fails, what happens? (Select the best answer.)",
+      "options": [
+        "STP disables all members",
+        "Port-channel goes down immediately",
+        "Traffic continues over remaining links in the bundle",
+        "All VLANs are deleted"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "mark": 1
+    }
+  ]
+}

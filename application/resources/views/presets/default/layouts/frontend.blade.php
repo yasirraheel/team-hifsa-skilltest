@@ -100,6 +100,20 @@
     <!-- main js -->
     <script src="{{ asset($activeTemplateTrue . 'js/main.js') }}"></script>
     <script src="{{ asset('assets/common/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        window.initBootstrapTooltips = function(scope) {
+            const root = scope || document;
+            const triggers = root.querySelectorAll('[data-bs-toggle="tooltip"]');
+            triggers.forEach((el) => {
+                if (!bootstrap.Tooltip.getInstance(el)) {
+                    new bootstrap.Tooltip(el);
+                }
+            });
+        };
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initBootstrapTooltips();
+        });
+    </script>
 
     @stack('script-lib')
     @stack('script')

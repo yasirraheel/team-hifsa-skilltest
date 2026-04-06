@@ -27,7 +27,7 @@
                     <div class="col-12 col-mb-12 col-lg-4 text-md-start mt-3 mt-lg-0 text-lg-end">
                         <div>
                             <a href="<?php echo e(__(@$advertisementSection->data_values?->url)); ?>"
-                                class="btn btn--base-3"><?php echo app('translator')->get('Discover More'); ?></a>
+                                class="btn btn--base-3"><?php echo e(__(@$advertisementSection->data_values?->button_name ?? 'Discover More')); ?></a>
                         </div>
                     </div>
                 </div>
@@ -45,8 +45,10 @@
                                     <span class="dis-tag">-<?php echo e($item->discount); ?>%</span>
                                 <?php endif; ?>
                                 <div class="thumb-wrap">
-                                    <img src="<?php echo e(getImage(getFilePath('course_image') . '/' . $item->image)); ?>"
-                                        alt="course_image">
+                                    <a href="<?php echo e(route('course.details', [slug($item->name), $item->id])); ?>" class="d-block">
+                                        <img src="<?php echo e(getImage(getFilePath('course_image') . '/' . $item->image)); ?>"
+                                            alt="course_image">
+                                    </a>
                                 </div>
                                 <div class="content-wrap">
                                     <p class="category"><?php echo e(__(@$item->category->name)); ?></p>
@@ -54,17 +56,30 @@
                                         <h6 class="title course-card-title" title="<?php echo e(__(@$item->name)); ?>"><?php echo e(__(@$item->name)); ?></h6>
                                     </a>
                                     <ul class="product-status">
-                                        <li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="<?php echo e(str_replace('ago', '', diffForHumans(@$item->created_at))); ?>">
                                             <i class="fa-solid fa-clock"></i>
                                             <p><?php echo e(str_replace('ago', '', diffForHumans(@$item->created_at))); ?></p>
                                         </li>
-                                        <li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="<?php echo e($item->enrolls->count()); ?> <?php echo app('translator')->get('Students'); ?>">
                                             <i class="fa-solid fa-graduation-cap"></i>
                                             <p><?php echo e($item->enrolls->count()); ?> <?php echo app('translator')->get('Students'); ?></p>
                                         </li>
-                                        <li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="<?php echo e(@$item->lessons->count()); ?> <?php echo app('translator')->get('Lessons'); ?>">
                                             <i class="fa-solid fa-file-video"></i>
                                             <p><?php echo e(@$item->lessons->count()); ?> <?php echo app('translator')->get('Lessons'); ?></p>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="<?php echo e($item->quizzes_count ?? 0); ?> <?php echo app('translator')->get('Quizzes'); ?>">
+                                            <i class="fa-solid fa-list-check"></i>
+                                            <p><?php echo e($item->quizzes_count ?? 0); ?> <?php echo app('translator')->get('Quizzes'); ?></p>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="<?php echo e($item->questions_count ?? 0); ?> <?php echo app('translator')->get('Questions'); ?>">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                            <p><?php echo e($item->questions_count ?? 0); ?> <?php echo app('translator')->get('Questions'); ?></p>
                                         </li>
                                     </ul>
                                 </div>

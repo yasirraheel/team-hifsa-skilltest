@@ -52,6 +52,11 @@
                                                 class="btn btn-sm btn--primary">
                                                 <i class="las la-eye text--shadow"></i>
                                             </a>
+                                            <a title="@lang('Delete User')" href="javascript:void(0)"
+                                                data-route="{{ route('admin.users.delete', $user->id) }}"
+                                                class="btn btn-sm btn--danger deleteBtn">
+                                                <i class="las la-trash text--shadow"></i>
+                                            </a>
                                         </td>
 
                                     </tr>
@@ -86,4 +91,41 @@
             </div>
         </form>
     </div>
+@endpush
+
+{{-- Delete Confirmation Modal --}}
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@lang('Delete User Confirmation')</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="las la-times"></i>
+                </button>
+            </div>
+            <form action="" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p class="fw-bold">@lang('Are you sure you want to delete this user? This action cannot be undone.')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--dark" data-bs-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--danger">@lang('Delete')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@push('script')
+<script>
+    (function($){
+        "use strict";
+        $('.deleteBtn').on('click', function() {
+            var modal = $('#deleteModal');
+            modal.find('form').attr('action', $(this).data('route'));
+            modal.modal('show');
+        });
+    })(jQuery);
+</script>
 @endpush
