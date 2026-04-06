@@ -97,6 +97,7 @@
                         @if ($course->lessons->count() > 0)
                             <div class="curriculam-list">
                                 <form action="{{ route('course.details', [slug($course->name), $course->id]) }}" method="GET" class="d-flex justify-content-end align-items-center flex-wrap gap-2 mb-3">
+                                    <input type="text" name="lesson_search" class="form-control w-auto" placeholder="@lang('Search lesson...')" value="{{ request()->query('lesson_search') }}">
                                     <label for="lesson-sort-filter" class="me-2 mb-0">@lang('Sort Lessons')</label>
                                     <select id="lesson-sort-filter" name="lesson_sort" class="form-select w-auto lesson-sort-select" onchange="this.form.submit()">
                                         <option value="default" @selected(($lessonSort ?? 'default') === 'default')>@lang('Default')</option>
@@ -110,7 +111,7 @@
                                 @php $lessonCount = $course->lessons->count(); @endphp
                                 @if ($lessonCount > 10)
                                     <div class="text-center mt-4">
-                                        <button type="button" class="btn btn--base" id="load-more-lessons" data-page="2" data-course-id="{{ $course->id }}" data-lesson-sort="{{ $lessonSort ?? 'default' }}">
+                                        <button type="button" class="btn btn--base" id="load-more-lessons" data-page="2" data-course-id="{{ $course->id }}" data-lesson-sort="{{ $lessonSort ?? 'default' }}" data-lesson-search="{{ request()->query('lesson_search') }}">
                                             @lang('Load More Lessons')
                                         </button>
                                     </div>
@@ -1661,6 +1662,7 @@
                 var page = btn.data('page');
                 var courseId = btn.data('course-id');
                 var lessonSort = btn.data('lesson-sort') || ($('#lesson-sort-filter').val() || 'default');
+                var lessonSearch = btn.data('lesson-search') || '';
 
                 btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i> @lang("Loading...")');
 
@@ -1672,6 +1674,7 @@
                         course_id: courseId,
                         page: page,
                         lesson_sort: lessonSort,
+                        lesson_search: lessonSearch,
                     },
                     success: function(response) {
                         if (response.status === 'success') {

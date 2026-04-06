@@ -231,6 +231,7 @@ class SiteController extends Controller
         if (!in_array($lessonSort, ['default', 'completed_first', 'pending_first'])) {
             $lessonSort = 'default';
         }
+        $lessonSearch = $request->query('lesson_search', '');
 
         $course = Course::with([
             'category',
@@ -245,13 +246,20 @@ class SiteController extends Controller
         $pageTitle = 'Course';
         $ad = Ad::orderBy('id', 'desc')->first();
         $reviews = Review::with('user')->where('course_id', $id)->paginate(getPaginate());
-        $totalLessonsCount = $course->lessons->count();
         $lessonStartIndex = 1;
         $lessonOrderMap = [];
 
         foreach ($course->lessons->values() as $index => $lessonItem) {
             $lessonOrderMap[(int) $lessonItem->id] = $index + 1;
         }
+
+        $allCourseLessons = $course->lessons;
+        if ($lessonSearch !== '') {
+            $allCourseLessons = $allCourseLessons->filter(function($lesson) use ($lessonSearch) {
+                return stripos($lesson->title, $lessonSearch) !== false;
+            });
+        }
+        $totalLessonsCount = $allCourseLessons->count();
 
         $isEnrolled = false;
         $completedLessonIds = [];
@@ -293,7 +301,7 @@ class SiteController extends Controller
             }
         }
 
-        $sortedLessons = $this->sortLessonsByCompletion($course->lessons, $completedLessonIds, $lessonSort);
+        $sortedLessons = $this->sortLessonsByCompletion($allCourseLessons, $completedLessonIds, $lessonSort);
         $course->setRelation('lessons', $sortedLessons);
 
         return view($this->activeTemplate . 'course.details', compact('pageTitle', 'course', 'ad', 'reviews', 'isEnrolled', 'completedLessonIds', 'courseProgress', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex', 'lessonSort', 'lessonOrderMap'));
@@ -305,10 +313,12 @@ class SiteController extends Controller
             'course_id' => 'required|integer|exists:courses,id',
             'page' => 'required|integer|min:1',
             'lesson_sort' => 'nullable|in:default,completed_first,pending_first',
+            'lesson_search' => 'nullable|string',
         ]);
 
         $perPage = 10; // Load 10 lessons per page
         $lessonSort = $request->lesson_sort ?? 'default';
+        $lessonSearch = $request->lesson_search ?? '';
         $course = Course::where('id', $request->course_id)->where('admin_status', 1)->where('status', 1)->first();
 
         if (!$course) {
@@ -333,8 +343,14 @@ class SiteController extends Controller
             $lessonOrderMap[(int) $lessonItem->id] = $index + 1;
         }
 
+        if ($lessonSearch !== '') {
+            $allLessons = $allLessons->filter(function($lesson) use ($lessonSearch) {
+                return stripos($lesson->title, $lessonSearch) !== false;
+            });
+        }
+
         // DEBUG: Log lessons count
-        $totalLessonsCount = Lesson::where('course_id', $request->course_id)->where('status', 1)->count();
+        $totalLessonsCount = $allLessons->count();
 
         $isEnrolled = false;
         $completedLessonIds = [];
