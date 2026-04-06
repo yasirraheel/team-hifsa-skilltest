@@ -97,7 +97,7 @@ class SocialLogin
         $newUser->ts = 0;
         $newUser->tv = 1;
         $newUser->reg_step = 1;
-        $newUser->login_by = $provider;
+        // $newUser->login_by = $provider;
 
         if (@$user->avatar) {
             $fileName = uniqid() . time() . '.jpg';
