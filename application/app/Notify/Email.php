@@ -96,6 +96,14 @@ class Email extends NotifyProcess{
         $mail->Port       = $config->port;
         $mail->CharSet = 'UTF-8';
         $mail->Timeout = 10;
+        $mail->SMTPAutoTLS = false;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
         //Recipients
         $mail->setFrom($general->email_from, $general->site_name);
         $mail->addAddress($this->email, $this->receiverName);
