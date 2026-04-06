@@ -101,7 +101,11 @@ class SocialLogin
 
         if (@$user->avatar) {
             $fileName = uniqid() . time() . '.jpg';
-            file_put_contents(getFilePath('userProfile') . '/' . $fileName, file_get_contents($this->provider != 'facebook' ? $user->avatar : $user->avatar . '&access_token=' . $user->token));
+            $path = getFilePath('userProfile');
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+            file_put_contents($path . '/' . $fileName, file_get_contents($this->provider != 'facebook' ? $user->avatar : $user->avatar . '&access_token=' . $user->token));
             $newUser->image = $fileName;
         }
 
