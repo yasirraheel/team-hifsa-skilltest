@@ -39,7 +39,7 @@
                                         </td>
                                         <td>
                                             <div class="button--group">
-                                                <button title="@lang('Edit')" href="javascript:void(0)"
+                                                <button type="button" title="@lang('Edit')" href="javascript:void(0)"
                                                     class="btn btn-sm btn--primary ms-1 editButtons"
                                                     data-category="{{ json_encode($category->only('name', 'image', 'status')) }}"
                                                     data-bs-toggle="modal" data-bs-target="#editModal"
@@ -280,7 +280,9 @@
                     $('#edit_image_preview').append("<div class='img-div' id='img-div" + i + "'><img src='" +
                         URL.createObjectURL(event.target.files[i]) +
                         "' class='img-responsive image img-thumbnail'title='" + total_file[i]
-                        .name + "'></div>");
+                        .name + "'><div class='middle'><button type='button' id='action-icon' value='img-div" +
+                        i + "' class='btn btn-danger' role='" + total_file[i].name +
+                        "'><i class='fa fa-trash'></i></button></div></div>");
                 }
             }
 
@@ -338,7 +340,7 @@
                         $('#image_preview').append("<div class='img-div' id='img-div" + i + "'><img src='" +
                             URL.createObjectURL(event.target.files[i]) +
                             "' class='img-responsive image img-thumbnail' title='" + total_file[i]
-                            .name + "'><div class='middle'><button id='action-icon' value='img-div" +
+                            .name + "'><div class='middle'><button type='button' id='action-icon' value='img-div" +
                             i + "' class='btn btn-danger' role='" + total_file[i].name +
                             "'><i class='fa fa-trash'></i></button></div></div>");
                     }
