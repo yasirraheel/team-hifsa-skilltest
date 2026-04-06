@@ -5,9 +5,12 @@
             <div class="card b-radius--10 ">
                 <div class="card-body p-0">
                     <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light style--two custom-data-table">
-                            <thead>
-                                <tr>
+                        <form action="{{ route('admin.category.bulk.delete') }}" method="POST" id="bulkDeleteForm">
+                            @csrf
+                            <table class="table table--light style--two custom-data-table">
+                                <thead>
+                                    <tr>
+                                        <th width="5%"><input type="checkbox" id="selectAll"></th>
                                     <th>@lang('SI')</th>
                                     <th>@lang('Name')</th>
                                     <th>@lang('Image')</th>
@@ -18,6 +21,7 @@
                             <tbody>
                                 @forelse ($categories as $category)
                                     <tr>
+                                        <td><input type="checkbox" name="ids[]" value="{{ $category->id }}" class="categoryCheckbox"></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td><strong>{{ __($category->name) }}</strong></td>
                                         <td><img class="category_image"
@@ -53,6 +57,7 @@
                                 @endforelse
                             </tbody>
                         </table><!-- table end -->
+                        </form>
                     </div>
                 </div>
             </div><!-- card end -->
@@ -185,6 +190,7 @@
 
 @push('breadcrumb-plugins')
     <div class="d-flex flex-wrap justify-content-end align-items-center">
+        <button type="button" class="btn btn-sm btn--danger me-4" id="bulkDeleteBtn"><i class="las la-trash"></i>@lang('Delete Selected')</button>
         <a class="btn btn-sm btn--primary me-4" data-bs-toggle="modal" data-bs-target="#createModal"><i
                 class="las la-plus"></i>@lang('Add New')</a>
         <form method="GET" class="form-inline">
@@ -302,6 +308,21 @@
         }
         $(document).ready(function() {
             "use strict";
+
+            $('#selectAll').on('change', function() {
+                $('.categoryCheckbox').prop('checked', $(this).prop('checked'));
+            });
+
+            $('#bulkDeleteBtn').on('click', function() {
+                if($('.categoryCheckbox:checked').length > 0) {
+                    if(confirm("Are you sure you want to delete the selected categories?")) {
+                        $('#bulkDeleteForm').submit();
+                    }
+                } else {
+                    alert("Please select at least one category to delete.");
+                }
+            });
+
             var fileArr = [];
             $("#images").on('change', function() {
                 if (fileArr.length > 0) fileArr = [];

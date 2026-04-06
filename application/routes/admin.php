@@ -53,6 +53,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/', 'categories')->name('all');
         Route::post('create', 'categoryStore')->name('store');
         Route::put('update/{category}', 'categoryUpdate')->name('update');
+        Route::post('bulk-delete', 'bulkDelete')->name('bulk.delete');
     });
 
     // Add Group Manager

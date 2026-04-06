@@ -67,4 +67,23 @@ class CategoryController extends Controller
         return to_route('admin.category.all')->withNotify($notify);
     }
 
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:categories,id'
+        ]);
+
+        $categories = Category::whereIn('id', $request->ids)->get();
+        foreach ($categories as $category) {
+            if ($category->image) {
+                fileManager()->removeFile(getFilePath('category') . '/' . $category->image);
+            }
+            $category->delete();
+        }
+
+        $notify[] = ['success', 'Selected categories deleted successfully'];
+        return back()->withNotify($notify);
+    }
+
 }
