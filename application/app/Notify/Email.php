@@ -95,6 +95,7 @@ class Email extends NotifyProcess{
         }
         $mail->Port       = $config->port;
         $mail->CharSet = 'UTF-8';
+        $mail->Timeout = 10;
         //Recipients
         $mail->setFrom($general->email_from, $general->site_name);
         $mail->addAddress($this->email, $this->receiverName);
