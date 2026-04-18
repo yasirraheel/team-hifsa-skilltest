@@ -22,27 +22,34 @@ class LessonController extends Controller
     function courses(Request $request, $id)
     {
         $pageTitle = 'Lessons';
-        $lessons = Lesson::with('course_category')->adminOwner()->where('course_id', $id)->orderBy('id','desc');
+        $sort = $request->sort == 'oldest' ? 'oldest' : 'newest';
+        $sortDirection = $sort == 'oldest' ? 'asc' : 'desc';
+        $lessons = Lesson::with('course_category')->adminOwner()->where('course_id', $id);
+
         if ($request->search) {
-            $lessons = $lessons->where('title', 'like', "%$request->search%")->paginate(getPaginate());
-        } else {
-            $lessons = $lessons->paginate(getPaginate());
+            $lessons = $lessons->where('title', 'like', "%$request->search%");
         }
 
-        return view('admin.lessons.index', compact('pageTitle', 'lessons'));
+        $lessons = $lessons->orderBy('created_at', $sortDirection)->paginate(getPaginate())->withQueryString();
+
+        return view('admin.lessons.index', compact('pageTitle', 'lessons', 'sort'));
     }
 
 
     function instructorLessons(Request $request, $id)
     {
         $pageTitle = 'Instructor Courses';
+        $sort = $request->sort == 'oldest' ? 'oldest' : 'newest';
+        $sortDirection = $sort == 'oldest' ? 'asc' : 'desc';
         $lesson = Lesson::with('course_category')->where('owner_type',2)->where('course_id', $id);
+
         if ($request->search) {
-            $courses = $lesson->where('title', 'like', "%$request->search%")->paginate(getPaginate());
-        } else {
-            $lesson = $lesson->paginate(getPaginate());
+            $lesson = $lesson->where('title', 'like', "%$request->search%");
         }
-        return view('admin.lessons.instructor_index', compact('pageTitle', 'lesson'));
+
+        $lesson = $lesson->orderBy('created_at', $sortDirection)->paginate(getPaginate())->withQueryString();
+
+        return view('admin.lessons.instructor_index', compact('pageTitle', 'lesson', 'sort'));
     }
 
     function create()

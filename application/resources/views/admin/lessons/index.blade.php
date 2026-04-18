@@ -145,11 +145,17 @@
     <div class="d-flex flex-wrap justify-content-end">
         <a class="btn btn-sm btn--primary me-2 d-flex align-items-center"
             href="{{ route('admin.lesson.create') }}"><i class="las la-plus"></i>@lang('Add New')</a>
-        <form method="GET" class="form-inline">
+        <form method="GET" class="d-flex flex-wrap gap-2">
             <div class="input-group justify-content-end">
                 <input type="text" name="search" class="form-control bg--white search-color" placeholder="@lang('Search by Username')"
                     value="{{ request()->search }}">
                 <button class="btn btn--primary input-group-text" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="input-group justify-content-end">
+                <select name="sort" class="form-control bg--white search-color" onchange="this.form.submit()">
+                    <option value="newest" {{ ($sort ?? 'newest') == 'newest' ? 'selected' : '' }}>@lang('Newest')</option>
+                    <option value="oldest" {{ ($sort ?? 'newest') == 'oldest' ? 'selected' : '' }}>@lang('Oldest')</option>
+                </select>
             </div>
         </form>
     </div>
