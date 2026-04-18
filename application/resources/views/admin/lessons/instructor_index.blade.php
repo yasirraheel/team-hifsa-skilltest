@@ -60,7 +60,12 @@
                                         <td class="lesson-title-cell">
                                             <span class="lesson-title-content">
                                                 <span class="lesson-title-index">{{ $lesson->firstItem() + $loop->index }}.</span>
-                                                <span class="lesson-title-text">{{ __(@$item->title) }}</span>
+                                                <span class="lesson-title-text">
+                                                    <span class="d-block">{{ __(@$item->title) }}</span>
+                                                    <span class="lesson-copy-flag d-none" data-copy-flag="{{ $item->id }}">
+                                                        @lang('Copied recently')
+                                                    </span>
+                                                </span>
                                             </span>
                                         </td>
                                      
@@ -87,6 +92,14 @@
                                      
                                         <td class="text-center">
                                             <div class="button--group text-center">
+                                                @if ($item->video_url)
+                                                    <button type="button" class="btn btn-sm lesson-copy-single ms-1"
+                                                        data-lesson-id="{{ $item->id }}"
+                                                        data-video-url="{{ $item->video_url }}"
+                                                        title="@lang('Copy YT URL')">
+                                                        <i class="fa-solid fa-copy"></i>
+                                                    </button>
+                                                @endif
                                                 <a class="btn btn-sm btn--primary ms-1"
                                                     href="{{ route('course.details', [slug(@$item->course_category->name),@$item->course_category->id]) }}">
                                                     <i class="fa-solid fa-eye"></i></a>
@@ -199,6 +212,18 @@
             min-width: 0;
         }
 
+        .lesson-copy-flag {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(27, 191, 114, 0.12);
+            color: #1bbf72;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
         .lesson-table-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -237,6 +262,25 @@
             color: #7d8da6;
             opacity: 1;
             cursor: not-allowed;
+        }
+
+        .lesson-copy-single {
+            background: #f4f6fb;
+            border: 1px solid #d9e1ef;
+            color: #51688f;
+        }
+
+        .lesson-copy-single:hover,
+        .lesson-copy-single:focus {
+            background: #0caaad;
+            border-color: #0caaad;
+            color: #fff;
+        }
+
+        .lesson-copy-single.is-copied {
+            background: #1bbf72;
+            border-color: #1bbf72;
+            color: #fff;
         }
 
         .lesson-selection-count {
@@ -284,9 +328,14 @@
         (function($) {
             "use strict";
 
+            const copiedStateStorageKey = 'adminLessonCopiedYoutubeLinks';
+            const copiedStateTtl = 24 * 60 * 60 * 1000;
             const copySuccessText = @json(__('YouTube link(s) copied'));
+            const singleCopySuccessText = @json(__('YouTube URL copied'));
             const copyEmptyText = @json(__('No stored YouTube links found in the selected lessons'));
             const copyErrorText = @json(__('Unable to copy YouTube links right now'));
+            const copyButtonLabel = @json(__('Copy YT URL'));
+            const copiedButtonLabel = @json(__('Copied recently'));
 
             function courseDeleteModal(object) {
                 var videoModal = $('#videoModal');
@@ -345,6 +394,63 @@
                 });
             }
 
+            function getCopiedLessonMap() {
+                try {
+                    const savedValue = localStorage.getItem(copiedStateStorageKey);
+                    const parsedValue = savedValue ? JSON.parse(savedValue) : {};
+                    return parsedValue && typeof parsedValue === 'object' ? parsedValue : {};
+                } catch (error) {
+                    return {};
+                }
+            }
+
+            function saveCopiedLessonMap(copiedMap) {
+                try {
+                    localStorage.setItem(copiedStateStorageKey, JSON.stringify(copiedMap));
+                } catch (error) {
+                }
+            }
+
+            function pruneCopiedLessonMap() {
+                const copiedMap = getCopiedLessonMap();
+                const now = Date.now();
+                const activeEntries = {};
+
+                Object.keys(copiedMap).forEach(function(key) {
+                    if ((now - Number(copiedMap[key])) < copiedStateTtl) {
+                        activeEntries[key] = copiedMap[key];
+                    }
+                });
+
+                saveCopiedLessonMap(activeEntries);
+                return activeEntries;
+            }
+
+            function markLessonAsCopied(lessonId) {
+                const copiedMap = pruneCopiedLessonMap();
+                copiedMap[String(lessonId)] = Date.now();
+                saveCopiedLessonMap(copiedMap);
+                syncCopiedLessonSignals();
+            }
+
+            function syncCopiedLessonSignals() {
+                const copiedMap = pruneCopiedLessonMap();
+
+                $('.lesson-copy-single').each(function() {
+                    const button = $(this);
+                    const lessonId = String(button.data('lesson-id'));
+                    const isCopied = !!copiedMap[lessonId];
+                    const icon = button.find('i');
+
+                    button.toggleClass('is-copied', isCopied);
+                    button.attr('title', isCopied ? copiedButtonLabel : copyButtonLabel);
+                    icon.toggleClass('fa-copy', !isCopied);
+                    icon.toggleClass('fa-check', isCopied);
+
+                    $(`[data-copy-flag="${lessonId}"]`).toggleClass('d-none', !isCopied);
+                });
+            }
+
             window.courseDeleteModal = courseDeleteModal;
 
             $('#lessonSelectAll').on('change', function() {
@@ -370,6 +476,12 @@
                 }
 
                 copyTextToClipboard(urls.join('\n')).then(function() {
+                    getSelectedLessonItems().each(function() {
+                        if (($(this).data('video-url') || '').toString().trim()) {
+                            markLessonAsCopied($(this).val());
+                        }
+                    });
+
                     Toast.fire({
                         icon: 'success',
                         title: `${urls.length} ${copySuccessText}`
@@ -382,7 +494,35 @@
                 });
             });
 
+            $(document).on('click', '.lesson-copy-single', function() {
+                const button = $(this);
+                const lessonId = button.data('lesson-id');
+                const videoUrl = (button.data('video-url') || '').toString().trim();
+
+                if (!videoUrl) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: copyEmptyText
+                    });
+                    return;
+                }
+
+                copyTextToClipboard(videoUrl).then(function() {
+                    markLessonAsCopied(lessonId);
+                    Toast.fire({
+                        icon: 'success',
+                        title: singleCopySuccessText
+                    });
+                }).catch(function() {
+                    Toast.fire({
+                        icon: 'error',
+                        title: copyErrorText
+                    });
+                });
+            });
+
             syncLessonSelectionState();
+            syncCopiedLessonSignals();
         })(jQuery);
     </script>
 @endpush
