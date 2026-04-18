@@ -6,14 +6,14 @@
         <div class="col-md-12">
             <div class="card b-radius--10 ">
                 <div class="card-body p-0">
-                    <div class="d-flex flex-wrap justify-content-end gap-2 px-3 pt-3">
-                        <form method="GET" class="d-flex flex-wrap gap-2">
-                            <div class="input-group justify-content-end">
+                    <div class="lesson-page-actions lesson-page-actions--compact px-3 pt-3">
+                        <form method="GET" class="lesson-page-actions__filters">
+                            <div class="input-group lesson-page-actions__search">
                                 <input type="text" name="search" class="form-control bg--white search-color"
                                     placeholder="@lang('Search by Lesson Title')" value="{{ request()->search }}">
                                 <button class="btn btn--primary input-group-text" type="submit"><i class="fa fa-search"></i></button>
                             </div>
-                            <div class="input-group justify-content-end">
+                            <div class="lesson-page-actions__sort">
                                 <select name="sort" class="form-control bg--white search-color" onchange="this.form.submit()">
                                     <option value="newest" {{ ($sort ?? 'newest') == 'newest' ? 'selected' : '' }}>@lang('Newest')</option>
                                     <option value="oldest" {{ ($sort ?? 'newest') == 'oldest' ? 'selected' : '' }}>@lang('Oldest')</option>
@@ -21,16 +21,18 @@
                             </div>
                         </form>
                     </div>
-                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 px-3 pt-3">
-                        <div class="d-flex flex-wrap align-items-center gap-2">
-                            <button type="button" class="btn btn-sm btn--primary" id="copySelectedYoutubeLinks" disabled>
+                    <div class="lesson-table-toolbar">
+                        <div class="lesson-table-toolbar__left">
+                            <button type="button" class="btn btn-sm lesson-copy-btn" id="copySelectedYoutubeLinks" disabled>
                                 <i class="fa-solid fa-copy"></i> @lang('Copy Selected YT Links')
                             </button>
-                            <span class="badge badge--primary">
+                            <span class="lesson-selection-count">
                                 <span id="selectedLessonCount">0</span> @lang('Selected')
                             </span>
                         </div>
-                        <span class="text-muted small">@lang('Select lessons on this page to copy stored YouTube links.')</span>
+                        <p class="lesson-table-toolbar__note mb-0">
+                            @lang('Select lessons on this page to copy stored YouTube links.')
+                        </p>
                     </div>
                     <div class="table-responsive--sm table-responsive">
                         <table class="table table--light style--two custom-data-table">
@@ -135,6 +137,119 @@
         </div>
     </div>
 @endsection
+
+@push('style')
+    <style>
+        .lesson-page-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .lesson-page-actions--compact {
+            justify-content: flex-end;
+        }
+
+        .lesson-page-actions__filters {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .lesson-page-actions__search,
+        .lesson-page-actions__sort {
+            width: 100%;
+        }
+
+        .lesson-page-actions__sort .form-control,
+        .lesson-page-actions__search .form-control,
+        .lesson-page-actions__search .input-group-text {
+            height: 50px;
+        }
+
+        .lesson-table-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px 16px;
+        }
+
+        .lesson-table-toolbar__left {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lesson-copy-btn {
+            background: rgba(12, 170, 173, 0.08);
+            border: 1px solid rgba(12, 170, 173, 0.2);
+            color: #0caaad;
+            min-height: 42px;
+            padding: 0.625rem 1rem;
+            white-space: nowrap;
+        }
+
+        .lesson-copy-btn:hover,
+        .lesson-copy-btn:focus {
+            background: #0caaad;
+            border-color: #0caaad;
+            color: #fff;
+        }
+
+        .lesson-copy-btn:disabled {
+            background: rgba(12, 170, 173, 0.08);
+            border-color: rgba(12, 170, 173, 0.12);
+            color: #7d8da6;
+            opacity: 1;
+            cursor: not-allowed;
+        }
+
+        .lesson-selection-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0.625rem 1rem;
+            border-radius: 6px;
+            background: #f3f5ff;
+            color: #51688f;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .lesson-table-toolbar__note {
+            color: #7d8da6;
+            font-size: 0.9375rem;
+            text-align: right;
+        }
+
+        @media (max-width: 991px) {
+            .lesson-page-actions,
+            .lesson-page-actions--compact {
+                justify-content: flex-start;
+            }
+
+            .lesson-page-actions__filters {
+                width: 100%;
+            }
+
+            .lesson-table-toolbar {
+                padding: 18px 16px 14px;
+            }
+
+            .lesson-table-toolbar__note {
+                text-align: left;
+            }
+        }
+    </style>
+@endpush
 
 @push('script')
     <script>
