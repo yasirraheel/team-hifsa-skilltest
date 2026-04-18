@@ -207,7 +207,7 @@
         }
 
         .lesson-title-heading {
-            width: 62%;
+            width: 64%;
         }
 
         .lesson-title-heading__inner {
@@ -228,10 +228,17 @@
             width: 150px;
         }
 
+        .lesson-title-cell {
+            vertical-align: top;
+        }
+
         .lesson-title-content {
             display: flex;
             align-items: flex-start;
             gap: 8px;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
         }
 
         .lesson-title-select {
@@ -247,11 +254,17 @@
         }
 
         .lesson-title-text {
+            display: block;
             flex: 1 1 auto;
             min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .lesson-title-text > .d-block {
+            display: block;
+            white-space: normal !important;
+            overflow-wrap: anywhere;
             word-break: break-word;
             line-height: 1.45;
         }
