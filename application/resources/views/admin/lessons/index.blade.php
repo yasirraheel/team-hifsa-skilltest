@@ -11,12 +11,15 @@
                             <button type="button" class="btn btn-sm lesson-copy-btn" id="copySelectedYoutubeLinks" disabled>
                                 <i class="fa-solid fa-copy"></i> @lang('Copy Selected YT Links')
                             </button>
+                            <button type="button" class="btn btn-sm lesson-download-btn" id="openSelectedDownsubLinks" disabled>
+                                <i class="fa-solid fa-download"></i> @lang('Downsub Selected')
+                            </button>
                             <span class="lesson-selection-count">
                                 <span id="selectedLessonCount">0</span> @lang('Selected')
                             </span>
                         </div>
                         <p class="lesson-table-toolbar__note mb-0">
-                            @lang('Select lessons on this page to copy stored YouTube links.')
+                            @lang('Select lessons on this page to copy stored YouTube links or open Downsub in bulk.')
                         </p>
                     </div>
                     <div class="table-responsive--sm table-responsive">
@@ -46,8 +49,13 @@
                                                 <span class="lesson-title-index">{{ $lessons->firstItem() + $loop->index }}.</span>
                                                 <span class="lesson-title-text">
                                                     <span class="d-block">{{ __(@$item->title) }}</span>
-                                                    <span class="lesson-copy-flag d-none" data-copy-flag="{{ $item->id }}">
-                                                        @lang('Copied recently')
+                                                    <span class="lesson-activity-flags">
+                                                        <span class="lesson-copy-flag d-none" data-copy-flag="{{ $item->id }}">
+                                                            @lang('Copied recently')
+                                                        </span>
+                                                        <span class="lesson-download-flag d-none" data-download-flag="{{ $item->id }}">
+                                                            @lang('Downloaded recently')
+                                                        </span>
                                                     </span>
                                                 </span>
                                             </span>
@@ -83,6 +91,14 @@
                                                         title="@lang('Copy YT URL')">
                                                         <i class="fa-solid fa-copy"></i>
                                                     </button>
+                                                    <a class="btn btn-sm lesson-download-single lesson-action-btn"
+                                                        data-lesson-id="{{ $item->id }}"
+                                                        data-video-url="{{ $item->video_url }}"
+                                                        href="https://downsub.com/?url={{ urlencode($item->video_url) }}"
+                                                        target="_blank" rel="noopener noreferrer"
+                                                        title="@lang('Open Downsub')">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </a>
                                                 @endif
                                                 <a class="btn btn-sm btn--primary lesson-action-btn"
                                                     href="{{ route('admin.lesson.edit', $item->id) }}">
@@ -221,7 +237,7 @@
         }
 
         .lesson-title-heading {
-            width: 36%;
+            width: 34%;
         }
 
         .lesson-category-heading {
@@ -238,7 +254,7 @@
         }
 
         .lesson-action-heading {
-            width: 170px;
+            width: 210px;
         }
 
         .lesson-title-content {
@@ -270,16 +286,31 @@
             white-space: nowrap;
         }
 
-        .lesson-copy-flag {
+        .lesson-activity-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .lesson-copy-flag,
+        .lesson-download-flag {
             display: inline-flex;
             align-items: center;
-            margin-top: 6px;
             padding: 3px 10px;
             border-radius: 999px;
-            background: rgba(27, 191, 114, 0.12);
-            color: #1bbf72;
             font-size: 12px;
             font-weight: 600;
+        }
+
+        .lesson-copy-flag {
+            background: rgba(27, 191, 114, 0.12);
+            color: #1bbf72;
+        }
+
+        .lesson-download-flag {
+            background: rgba(12, 170, 173, 0.12);
+            color: #0caaad;
         }
 
         .lesson-table-toolbar {
@@ -322,6 +353,30 @@
             cursor: not-allowed;
         }
 
+        .lesson-download-btn {
+            background: rgba(29, 78, 216, 0.08);
+            border: 1px solid rgba(29, 78, 216, 0.18);
+            color: #1d4ed8;
+            min-height: 42px;
+            padding: 0.625rem 1rem;
+            white-space: nowrap;
+        }
+
+        .lesson-download-btn:hover,
+        .lesson-download-btn:focus {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #fff;
+        }
+
+        .lesson-download-btn:disabled {
+            background: rgba(29, 78, 216, 0.08);
+            border-color: rgba(29, 78, 216, 0.12);
+            color: #7d8da6;
+            opacity: 1;
+            cursor: not-allowed;
+        }
+
         .lesson-copy-single {
             background: #f4f6fb;
             border: 1px solid #d9e1ef;
@@ -338,6 +393,25 @@
         .lesson-copy-single.is-copied {
             background: #1bbf72;
             border-color: #1bbf72;
+            color: #fff;
+        }
+
+        .lesson-download-single {
+            background: rgba(12, 170, 173, 0.08);
+            border: 1px solid rgba(12, 170, 173, 0.18);
+            color: #0caaad;
+        }
+
+        .lesson-download-single:hover,
+        .lesson-download-single:focus {
+            background: #0caaad;
+            border-color: #0caaad;
+            color: #fff;
+        }
+
+        .lesson-download-single.is-downloaded {
+            background: #0caaad;
+            border-color: #0caaad;
             color: #fff;
         }
 
@@ -359,8 +433,8 @@
         }
 
         .lesson-action-btn {
-            min-width: 36px;
-            padding: 0.375rem 0.55rem;
+            min-width: 34px;
+            padding: 0.34rem 0.5rem;
             margin: 0 !important;
         }
 
@@ -410,6 +484,7 @@
             "use strict";
 
             const copiedStateStorageKey = 'adminLessonCopiedYoutubeLinks';
+            const downloadedStateStorageKey = 'adminLessonDownloadedYoutubeLinks';
             const copiedStateTtl = 24 * 60 * 60 * 1000;
             const copySuccessText = @json(__('YouTube link(s) copied'));
             const singleCopySuccessText = @json(__('YouTube URL copied'));
@@ -417,6 +492,9 @@
             const copyErrorText = @json(__('Unable to copy YouTube links right now'));
             const copyButtonLabel = @json(__('Copy YT URL'));
             const copiedButtonLabel = @json(__('Copied recently'));
+            const downloadButtonLabel = @json(__('Open Downsub'));
+            const downloadedButtonLabel = @json(__('Downloaded recently'));
+            const bulkDownloadSuccessText = @json(__('Downsub link(s) opened'));
 
             function lessonDeleteModal(object) {
                 var videoModal = $('#videoModal');
@@ -429,6 +507,31 @@
                 return $('.lesson-select-item:checked');
             }
 
+            function getLessonVideoUrl(element) {
+                return ($(element).data('video-url') || '').toString().trim();
+            }
+
+            function getSelectedLessonVideoUrls() {
+                return [...new Set(getSelectedLessonItems().map(function() {
+                    return getLessonVideoUrl(this);
+                }).get().filter(Boolean))];
+            }
+
+            function buildDownsubUrl(videoUrl) {
+                return `https://downsub.com/?url=${encodeURIComponent(videoUrl)}`;
+            }
+
+            function openUrlInNewTab(url) {
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
             function syncLessonSelectionState() {
                 const selectAll = $('#lessonSelectAll');
                 const lessonItems = $('.lesson-select-item');
@@ -437,6 +540,7 @@
 
                 $('#selectedLessonCount').text(selectedCount);
                 $('#copySelectedYoutubeLinks').prop('disabled', selectedCount === 0);
+                $('#openSelectedDownsubLinks').prop('disabled', selectedCount === 0);
 
                 if (!lessonItems.length) {
                     selectAll.prop({
@@ -475,9 +579,9 @@
                 });
             }
 
-            function getCopiedLessonMap() {
+            function getLessonStateMap(storageKey) {
                 try {
-                    const savedValue = localStorage.getItem(copiedStateStorageKey);
+                    const savedValue = localStorage.getItem(storageKey);
                     const parsedValue = savedValue ? JSON.parse(savedValue) : {};
                     return parsedValue && typeof parsedValue === 'object' ? parsedValue : {};
                 } catch (error) {
@@ -485,37 +589,45 @@
                 }
             }
 
-            function saveCopiedLessonMap(copiedMap) {
+            function saveLessonStateMap(storageKey, stateMap) {
                 try {
-                    localStorage.setItem(copiedStateStorageKey, JSON.stringify(copiedMap));
+                    localStorage.setItem(storageKey, JSON.stringify(stateMap));
                 } catch (error) {
                 }
             }
 
-            function pruneCopiedLessonMap() {
-                const copiedMap = getCopiedLessonMap();
+            function pruneLessonStateMap(storageKey) {
+                const stateMap = getLessonStateMap(storageKey);
                 const now = Date.now();
                 const activeEntries = {};
 
-                Object.keys(copiedMap).forEach(function(key) {
-                    if ((now - Number(copiedMap[key])) < copiedStateTtl) {
-                        activeEntries[key] = copiedMap[key];
+                Object.keys(stateMap).forEach(function(key) {
+                    if ((now - Number(stateMap[key])) < copiedStateTtl) {
+                        activeEntries[key] = stateMap[key];
                     }
                 });
 
-                saveCopiedLessonMap(activeEntries);
+                saveLessonStateMap(storageKey, activeEntries);
                 return activeEntries;
             }
 
             function markLessonAsCopied(lessonId) {
-                const copiedMap = pruneCopiedLessonMap();
+                const copiedMap = pruneLessonStateMap(copiedStateStorageKey);
                 copiedMap[String(lessonId)] = Date.now();
-                saveCopiedLessonMap(copiedMap);
-                syncCopiedLessonSignals();
+                saveLessonStateMap(copiedStateStorageKey, copiedMap);
+                syncLessonActivitySignals();
             }
 
-            function syncCopiedLessonSignals() {
-                const copiedMap = pruneCopiedLessonMap();
+            function markLessonAsDownloaded(lessonId) {
+                const downloadedMap = pruneLessonStateMap(downloadedStateStorageKey);
+                downloadedMap[String(lessonId)] = Date.now();
+                saveLessonStateMap(downloadedStateStorageKey, downloadedMap);
+                syncLessonActivitySignals();
+            }
+
+            function syncLessonActivitySignals() {
+                const copiedMap = pruneLessonStateMap(copiedStateStorageKey);
+                const downloadedMap = pruneLessonStateMap(downloadedStateStorageKey);
 
                 $('.lesson-copy-single').each(function() {
                     const button = $(this);
@@ -527,8 +639,28 @@
                     button.attr('title', isCopied ? copiedButtonLabel : copyButtonLabel);
                     icon.toggleClass('fa-copy', !isCopied);
                     icon.toggleClass('fa-check', isCopied);
+                });
 
-                    $(`[data-copy-flag="${lessonId}"]`).toggleClass('d-none', !isCopied);
+                $('.lesson-download-single').each(function() {
+                    const button = $(this);
+                    const lessonId = String(button.data('lesson-id'));
+                    const isDownloaded = !!downloadedMap[lessonId];
+                    const icon = button.find('i');
+
+                    button.toggleClass('is-downloaded', isDownloaded);
+                    button.attr('title', isDownloaded ? downloadedButtonLabel : downloadButtonLabel);
+                    icon.toggleClass('fa-download', !isDownloaded);
+                    icon.toggleClass('fa-check', isDownloaded);
+                });
+
+                $('[data-copy-flag]').each(function() {
+                    const flag = $(this);
+                    flag.toggleClass('d-none', !copiedMap[String(flag.data('copy-flag'))]);
+                });
+
+                $('[data-download-flag]').each(function() {
+                    const flag = $(this);
+                    flag.toggleClass('d-none', !downloadedMap[String(flag.data('download-flag'))]);
                 });
             }
 
@@ -544,9 +676,7 @@
             });
 
             $('#copySelectedYoutubeLinks').on('click', function() {
-                const urls = [...new Set(getSelectedLessonItems().map(function() {
-                    return ($(this).data('video-url') || '').toString().trim();
-                }).get().filter(Boolean))];
+                const urls = getSelectedLessonVideoUrls();
 
                 if (!urls.length) {
                     Toast.fire({
@@ -575,10 +705,40 @@
                 });
             });
 
+            $('#openSelectedDownsubLinks').on('click', function() {
+                const selectedItems = getSelectedLessonItems().filter(function() {
+                    return !!getLessonVideoUrl(this);
+                });
+                const urls = [...new Set(selectedItems.map(function() {
+                    return getLessonVideoUrl(this);
+                }).get())];
+
+                if (!urls.length) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: copyEmptyText
+                    });
+                    return;
+                }
+
+                urls.forEach(function(url) {
+                    openUrlInNewTab(buildDownsubUrl(url));
+                });
+
+                selectedItems.each(function() {
+                    markLessonAsDownloaded($(this).val());
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: `${urls.length} ${bulkDownloadSuccessText}`
+                });
+            });
+
             $(document).on('click', '.lesson-copy-single', function() {
                 const button = $(this);
                 const lessonId = button.data('lesson-id');
-                const videoUrl = (button.data('video-url') || '').toString().trim();
+                const videoUrl = getLessonVideoUrl(button);
 
                 if (!videoUrl) {
                     Toast.fire({
@@ -602,8 +762,12 @@
                 });
             });
 
+            $(document).on('click', '.lesson-download-single', function() {
+                markLessonAsDownloaded($(this).data('lesson-id'));
+            });
+
             syncLessonSelectionState();
-            syncCopiedLessonSignals();
+            syncLessonActivitySignals();
         })(jQuery);
     </script>
 @endpush
