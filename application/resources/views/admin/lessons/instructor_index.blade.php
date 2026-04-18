@@ -35,7 +35,7 @@
                         </p>
                     </div>
                     <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light style--two custom-data-table">
+                        <table class="table table--light style--two custom-data-table lesson-table">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -43,10 +43,9 @@
                                             id="lessonSelectAll">
                                     </th>
                                     <th class="lesson-title-heading">@lang('Title')</th>
-                                    <th class="text-center">@lang('Created at')</th>
-                                    <th class="text-center">@lang('Status')</th>
-                                    <th class="text-center">@lang('Live class')</th>
-                                    <th class="text-center">@lang('Action')</th>
+                                    <th class="text-center lesson-created-heading">@lang('Created at')</th>
+                                    <th class="text-center lesson-status-heading">@lang('Status')</th>
+                                    <th class="text-center lesson-action-heading">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,38 +68,30 @@
                                             </span>
                                         </td>
                                      
-                                        <td class="text-center">
+                                        <td class="text-center lesson-created-cell">
                                             {{ showDateTime($item->created_at) }} <br>
                                             {{ diffForHumans($item->created_at) }}
                                         </td>
 
-                                        <td>
+                                        <td class="text-center lesson-status-cell">
                                             @if ($item->status == 1)
                                                 <span class="badge badge--success">@lang('Active')</span>
                                             @else
                                                 <span class="badge badge--danger">@lang('Pending')</span>
                                             @endif
                                         </td>
-                                 
-                                        <td>
-                                            @if ($item->preview_video == 3)
-                                                <span class="badge badge--danger ">@lang('Live')</span>
-                                            @else
-                                                <span class="badge badge--success">@lang('N/A')</span>
-                                            @endif
-                                        </td>
-                                     
-                                        <td class="text-center">
-                                            <div class="button--group text-center">
+                                    
+                                        <td class="text-center lesson-action-cell">
+                                            <div class="button--group text-center lesson-action-buttons">
                                                 @if ($item->video_url)
-                                                    <button type="button" class="btn btn-sm lesson-copy-single ms-1"
+                                                    <button type="button" class="btn btn-sm lesson-copy-single lesson-action-btn"
                                                         data-lesson-id="{{ $item->id }}"
                                                         data-video-url="{{ $item->video_url }}"
                                                         title="@lang('Copy YT URL')">
                                                         <i class="fa-solid fa-copy"></i>
                                                     </button>
                                                 @endif
-                                                <a class="btn btn-sm btn--primary ms-1"
+                                                <a class="btn btn-sm btn--primary lesson-action-btn"
                                                     href="{{ route('course.details', [slug(@$item->course_category->name),@$item->course_category->id]) }}">
                                                     <i class="fa-solid fa-eye"></i></a>
                                             </div>
@@ -194,6 +185,27 @@
             direction: ltr;
         }
 
+        .lesson-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .lesson-title-heading {
+            width: 56%;
+        }
+
+        .lesson-created-heading {
+            width: 150px;
+        }
+
+        .lesson-status-heading {
+            width: 95px;
+        }
+
+        .lesson-action-heading {
+            width: 110px;
+        }
+
         .lesson-title-content {
             display: flex;
             align-items: flex-start;
@@ -281,6 +293,29 @@
             background: #1bbf72;
             border-color: #1bbf72;
             color: #fff;
+        }
+
+        .lesson-created-cell {
+            font-size: 13px;
+            line-height: 1.45;
+            white-space: nowrap;
+        }
+
+        .lesson-action-cell {
+            white-space: nowrap;
+        }
+
+        .lesson-action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .lesson-action-btn {
+            min-width: 36px;
+            padding: 0.375rem 0.55rem;
+            margin: 0 !important;
         }
 
         .lesson-selection-count {
