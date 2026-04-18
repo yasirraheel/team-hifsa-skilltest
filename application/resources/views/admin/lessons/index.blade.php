@@ -27,7 +27,7 @@
                                         <input type="checkbox" class="form-check-input lesson-select-all"
                                             id="lessonSelectAll">
                                     </th>
-                                    <th>@lang('Title')</th>
+                                    <th class="lesson-title-heading">@lang('Title')</th>
                                     <th class="text-center">@lang('Category')</th>
                                     <th class="text-center">@lang('Created at')</th>
                                     <th class="text-center">@lang('Status')</th>
@@ -42,8 +42,11 @@
                                             <input type="checkbox" class="form-check-input lesson-select-item"
                                                 value="{{ $item->id }}" data-video-url="{{ $item->video_url ?? '' }}">
                                         </td>
-                                        <td>
-                                            <span>{{ __(@$item->title) }}</span>
+                                        <td class="lesson-title-cell">
+                                            <span class="lesson-title-content">
+                                                <span class="lesson-title-index">{{ $lessons->firstItem() + $loop->index }}.</span>
+                                                <span class="lesson-title-text">{{ __(@$item->title) }}</span>
+                                            </span>
                                         </td>
                                         <td>
                                             <span>
@@ -198,6 +201,31 @@
         .lesson-page-actions__search .form-control,
         .lesson-page-actions__search .input-group-text {
             height: 50px;
+        }
+
+        .lesson-title-heading,
+        .lesson-title-cell,
+        .lesson-title-cell span {
+            text-align: left !important;
+            direction: ltr;
+        }
+
+        .lesson-title-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .lesson-title-index {
+            flex: 0 0 auto;
+            min-width: 24px;
+            color: #7d8da6;
+            font-weight: 600;
+        }
+
+        .lesson-title-text {
+            flex: 1 1 auto;
+            min-width: 0;
         }
 
         .lesson-table-toolbar {
