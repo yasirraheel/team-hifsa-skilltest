@@ -41,11 +41,13 @@
                         <table class="table table--light style--two custom-data-table lesson-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">
-                                        <input type="checkbox" class="form-check-input lesson-select-all"
-                                            id="lessonSelectAll">
+                                    <th class="lesson-title-heading">
+                                        <span class="lesson-title-heading__inner">
+                                            <input type="checkbox" class="form-check-input lesson-select-all lesson-title-select"
+                                                id="lessonSelectAll">
+                                            <span>@lang('Title')</span>
+                                        </span>
                                     </th>
-                                    <th class="lesson-title-heading">@lang('Title')</th>
                                     <th class="text-center lesson-created-heading">@lang('Created at')</th>
                                     <th class="text-center lesson-status-heading">@lang('Status')</th>
                                     <th class="text-center lesson-action-heading">@lang('Action')</th>
@@ -54,13 +56,10 @@
                             <tbody>
                                 @forelse($lesson as $item)
                                     <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="form-check-input lesson-select-item"
-                                                value="{{ $item->id }}" data-video-url="{{ $item->video_url ?? '' }}">
-                                        </td>
-
                                         <td class="lesson-title-cell">
                                             <span class="lesson-title-content">
+                                                <input type="checkbox" class="form-check-input lesson-select-item lesson-title-select"
+                                                    value="{{ $item->id }}" data-video-url="{{ $item->video_url ?? '' }}">
                                                 <span class="lesson-title-index">{{ $lesson->firstItem() + $loop->index }}.</span>
                                                 <span class="lesson-title-text">
                                                     <span class="d-block">{{ __(@$item->title) }}</span>
@@ -196,7 +195,8 @@
 
         .lesson-title-heading,
         .lesson-title-cell,
-        .lesson-title-cell span {
+        .lesson-title-text,
+        .lesson-title-text span {
             text-align: left !important;
             direction: ltr;
         }
@@ -207,30 +207,41 @@
         }
 
         .lesson-title-heading {
-            width: 56%;
+            width: 62%;
+        }
+
+        .lesson-title-heading__inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .lesson-created-heading {
-            width: 150px;
+            width: 140px;
         }
 
         .lesson-status-heading {
-            width: 95px;
+            width: 90px;
         }
 
         .lesson-action-heading {
-            width: 145px;
+            width: 150px;
         }
 
         .lesson-title-content {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        .lesson-title-select {
+            flex: 0 0 auto;
+            margin-top: 3px;
         }
 
         .lesson-title-index {
             flex: 0 0 auto;
-            min-width: 24px;
+            min-width: 20px;
             color: #7d8da6;
             font-weight: 600;
         }
@@ -238,6 +249,11 @@
         .lesson-title-text {
             flex: 1 1 auto;
             min-width: 0;
+        }
+
+        .lesson-title-text > .d-block {
+            word-break: break-word;
+            line-height: 1.45;
         }
 
         .lesson-activity-flags {
