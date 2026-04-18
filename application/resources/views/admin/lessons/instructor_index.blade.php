@@ -477,7 +477,9 @@
             const copiedButtonLabel = @json(__('Copied recently'));
             const downloadButtonLabel = @json(__('Open Downsub'));
             const downloadedButtonLabel = @json(__('Downloaded recently'));
-            const bulkDownloadSuccessText = @json(__('Downsub link(s) opened'));
+            const bulkDownloadSuccessText = @json(__('Downsub tab(s) opening'));
+            const bulkDownloadPopupText = @json(__('Allow pop-ups for this page to open every selected Downsub link'));
+            const bulkDownloadDelayMs = 800;
 
             function courseDeleteModal(object) {
                 var videoModal = $('#videoModal');
@@ -505,14 +507,48 @@
             }
 
             function openUrlInNewTab(url) {
-                const link = document.createElement('a');
-                link.href = url;
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }
+
+            function queueUrlsInNewTabs(urls, delayMs) {
+                const tabEntries = urls.map(function(url) {
+                    const tab = window.open('', '_blank', 'noopener,noreferrer');
+
+                    if (tab) {
+                        try {
+                            tab.opener = null;
+                            tab.document.write(`
+                                <title>Opening Downsub</title>
+                                <div style="font-family: Arial, sans-serif; padding: 24px; color: #243b53;">
+                                    Opening Downsub...
+                                </div>
+                            `);
+                            tab.document.close();
+                        } catch (error) {
+                        }
+                    }
+
+                    return {
+                        url,
+                        tab
+                    };
+                });
+
+                tabEntries.forEach(function(entry, index) {
+                    if (!entry.tab) {
+                        return;
+                    }
+
+                    window.setTimeout(function() {
+                        try {
+                            entry.tab.location.replace(entry.url);
+                        } catch (error) {
+                            entry.tab.location.href = entry.url;
+                        }
+                    }, index * delayMs);
+                });
+
+                return tabEntries;
             }
 
             function syncLessonSelectionState() {
@@ -692,11 +728,25 @@
                 const selectedItems = getSelectedLessonItems().filter(function() {
                     return !!getLessonVideoUrl(this);
                 });
-                const urls = [...new Set(selectedItems.map(function() {
-                    return getLessonVideoUrl(this);
-                }).get())];
+                const lessonEntries = selectedItems.map(function() {
+                    return {
+                        lessonId: $(this).val(),
+                        videoUrl: getLessonVideoUrl(this)
+                    };
+                }).get();
+                const uniqueEntries = [];
+                const seenUrls = new Set();
 
-                if (!urls.length) {
+                lessonEntries.forEach(function(entry) {
+                    if (seenUrls.has(entry.videoUrl)) {
+                        return;
+                    }
+
+                    seenUrls.add(entry.videoUrl);
+                    uniqueEntries.push(entry);
+                });
+
+                if (!uniqueEntries.length) {
                     Toast.fire({
                         icon: 'error',
                         title: copyEmptyText
@@ -704,18 +754,40 @@
                     return;
                 }
 
-                urls.forEach(function(url) {
-                    openUrlInNewTab(buildDownsubUrl(url));
+                const tabEntries = queueUrlsInNewTabs(uniqueEntries.map(function(entry) {
+                    return buildDownsubUrl(entry.videoUrl);
+                }), bulkDownloadDelayMs);
+                const openedEntries = uniqueEntries.filter(function(entry, index) {
+                    return !!tabEntries[index].tab;
                 });
 
-                selectedItems.each(function() {
-                    markLessonAsDownloaded($(this).val());
+                openedEntries.forEach(function(entry) {
+                    lessonEntries.forEach(function(lessonEntry) {
+                        if (lessonEntry.videoUrl === entry.videoUrl) {
+                            markLessonAsDownloaded(lessonEntry.lessonId);
+                        }
+                    });
                 });
 
-                Toast.fire({
-                    icon: 'success',
-                    title: `${urls.length} ${bulkDownloadSuccessText}`
-                });
+                if (!openedEntries.length) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: bulkDownloadPopupText
+                    });
+                    return;
+                }
+
+                if (openedEntries.length < uniqueEntries.length) {
+                    Toast.fire({
+                        icon: 'warning',
+                        title: bulkDownloadPopupText
+                    });
+                } else {
+                    Toast.fire({
+                        icon: 'success',
+                        title: `${openedEntries.length} ${bulkDownloadSuccessText}`
+                    });
+                }
             });
 
             $(document).on('click', '.lesson-copy-single', function() {
