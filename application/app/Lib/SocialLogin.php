@@ -53,7 +53,8 @@ class SocialLogin
             $userData = $this->createUser($user, $this->provider);
         }
 
-        auth()->login($userData);
+        Auth::login($userData, true);
+        request()->session()->regenerate();
         $this->loginLog($userData);
 
         return to_route('user.home');
