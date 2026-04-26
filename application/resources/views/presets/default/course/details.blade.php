@@ -106,10 +106,10 @@
                                     </select>
                                 </form>
                                 <ul class="list-group" id="lesson-list">
-                                    @include('presets.default.components.lesson_item', ['lessons' => $course->lessons->take(10), 'course' => $course, 'isEnrolled' => $isEnrolled, 'completedLessonIds' => $completedLessonIds, 'lessonNotes' => $lessonNotes])
+                                    @include('presets.default.components.lesson_item', ['lessons' => $course->lessons->take(20), 'course' => $course, 'isEnrolled' => $isEnrolled, 'completedLessonIds' => $completedLessonIds, 'lessonNotes' => $lessonNotes])
                                 </ul>
                                 @php $lessonCount = $course->lessons->count(); @endphp
-                                @if ($lessonCount > 10)
+                                @if ($lessonCount > 20)
                                     <div class="text-center mt-4">
                                         <button type="button" class="btn btn--base" id="load-more-lessons" data-page="2" data-course-id="{{ $course->id }}" data-lesson-sort="{{ $lessonSort ?? 'default' }}" data-lesson-search="{{ request()->query('lesson_search') }}">
                                             @lang('Load More Lessons')

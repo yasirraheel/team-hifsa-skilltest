@@ -316,7 +316,7 @@ class SiteController extends Controller
             'lesson_search' => 'nullable|string',
         ]);
 
-        $perPage = 10; // Load 10 lessons per page
+        $perPage = 20; // Load 20 lessons per page
         $lessonSort = $request->lesson_sort ?? 'default';
         $lessonSearch = $request->lesson_search ?? '';
         $course = Course::where('id', $request->course_id)->where('admin_status', 1)->where('status', 1)->first();
@@ -397,7 +397,7 @@ class SiteController extends Controller
             ]);
         }
 
-        // Calculate starting index for counter (e.g., page 2 with perPage 10 = start at 11)
+        // Calculate starting index for counter (e.g., page 2 with perPage 20 = start at 21)
         $lessonStartIndex = ($request->page - 1) * $perPage + 1;
 
         $html = view('presets.default.components.lesson_item', compact('lessons', 'course', 'isEnrolled', 'completedLessonIds', 'lessonNotes', 'totalLessonsCount', 'lessonStartIndex', 'lessonOrderMap'))->render();
